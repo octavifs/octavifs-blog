@@ -12,7 +12,7 @@ SCRIPT=$( realpath -s "$0" )
 REPO_DIR=`dirname $(dirname ${SCRIPT})`
 cd $REPO_DIR
 IMAGE_ID=$(docker build -q .)
-CONTAINER=`docker run -v $REPO_DIR:/blog $IMAGE_ID`
+CONTAINER=`echo docker run -v $REPO_DIR:/blog $IMAGE_ID`
 
 # Checkout master branch.
 if [ `git branch | grep master` ]
