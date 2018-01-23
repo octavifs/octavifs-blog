@@ -7,6 +7,13 @@ set -e
 
 echo "Started deploying"
 
+# Prepare docker image
+SCRIPT=$( realpath -s "$0" ) 
+REPO_DIR=`dirname $(dirname ${SCRIPT})`
+cd $REPO_DIR
+IMAGE_ID=$(docker build -q .)
+CONTAINER=`docker run -v $REPO_DIR:/blog $IMAGE_ID`
+
 # Checkout master branch.
 if [ `git branch | grep master` ]
 then
@@ -15,8 +22,8 @@ fi
 git checkout -b master
 
 # Build site.
-yarn install --modules-folder ./_assets/yarn
-bundle exec jekyll build
+$CONTAINER yarn install --modules-folder ./_assets/yarn
+$CONTAINER bundle exec jekyll build
 
 # Delete and move files.
 find . -maxdepth 1 ! -name '_site' ! -name '.git' ! -name '.gitignore' -exec rm -rf {} \;
@@ -30,7 +37,7 @@ git push -f -q origin master
 
 # Move back to previous branch.
 git checkout -
-yarn install --modules-folder ./_assets/yarn
+$CONTAINER yarn install --modules-folder ./_assets/yarn
 
 echo "Deployed Successfully!"
 
