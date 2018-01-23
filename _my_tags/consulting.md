@@ -1,4 +1,0 @@
----
-slug: consulting
-name: Consulting
----

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://octavifs.github.io/tag/ai/</loc>
+<lastmod>2018-01-23T02:35:46+00:00</lastmod>
+</url>
+<url>
+<loc>https://octavifs.github.io/tag/consulting/</loc>
+<lastmod>2018-01-23T02:35:46+00:00</lastmod>
+</url>
+<url>
+<loc>https://octavifs.github.io/tag/web/</loc>
+<lastmod>2018-01-23T02:35:46+00:00</lastmod>
+</url>
+<url>
+<loc>https://octavifs.github.io/posts/some-other-random-post</loc>
+<lastmod>2018-01-21T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://octavifs.github.io/posts/some-random-intro</loc>
+<lastmod>2018-01-22T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://octavifs.github.io/about</loc>
+</url>
+<url>
+<loc>https://octavifs.github.io/</loc>
+</url>
+</urlset>
