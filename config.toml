@@ -1,0 +1,29 @@
+baseURL = "https://octavifs.me/"
+languageCode = "en-us"
+title = "Octavi Font"
+theme = "hugo-nuo"
+enableRobotsTXT = true
+PygmentsCodeFences = true
+canonifyurls = true
+
+[params]
+  avatar = "images/avatar.jpeg"
+  seotitle = "Octavi Font"
+  subtitle = "~ AI for healthcare - Consulting ~"
+  email = "hello@octavifs.me"
+  github = "octavifs"
+  linkedin = "octavifs"
+  #medium = "octavifs"
+
+[[menu.main]]
+  name = "Blog"
+  weight = 10
+  identifier = "home"
+  url = "/"
+
+# Disabled for now
+#[[menu.main]]
+#  name = "Tags"
+#  weight = 30
+#  identifier = "tags"
+#  url = "/tags/"
