@@ -8,3 +8,5 @@ comments: false
 ---
 
 Hi, I'm Octavi Font. I'm a software engineer based in Barcelona focused on the AI for healthcare space.
+
+Already under construction.
