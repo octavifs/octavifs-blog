@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Octavi Font</title>
+    <link>https://octavifs.me/post/</link>
+    <description>Recent content in Posts on Octavi Font</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jan 2019 14:05:17 +0100</lastBuildDate>
+    
+	<atom:link href="https://octavifs.me/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker for AI Development and Deployment</title>
+      <link>https://octavifs.me/post/docker-for-ai-development-and-deployment/</link>
+      <pubDate>Fri, 11 Jan 2019 14:05:17 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/docker-for-ai-development-and-deployment/</guid>
+      <description>Making the transition from developing models to deployment repeatable
+ TBD</description>
+    </item>
+    
+    <item>
+      <title>Designing a UI for EEG Experiments</title>
+      <link>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</link>
+      <pubDate>Thu, 10 Jan 2019 21:54:12 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</guid>
+      <description>&lt;p&gt;How I created a UI to standarize EEG captures with the Emotiv Epoc+ and Electron.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fractal Image Compression</title>
+      <link>https://octavifs.me/post/fractal-image-compression/</link>
+      <pubDate>Thu, 10 Jan 2019 21:45:43 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/fractal-image-compression/</guid>
+      <description>&lt;p&gt;Did you know it is possible to encode any image as a set of fractals?&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

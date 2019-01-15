@@ -1,29 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>https://octavifs.github.io/tag/ai/</loc>
-<lastmod>2018-01-23T02:35:46+00:00</lastmod>
-</url>
-<url>
-<loc>https://octavifs.github.io/tag/consulting/</loc>
-<lastmod>2018-01-23T02:35:46+00:00</lastmod>
-</url>
-<url>
-<loc>https://octavifs.github.io/tag/web/</loc>
-<lastmod>2018-01-23T02:35:46+00:00</lastmod>
-</url>
-<url>
-<loc>https://octavifs.github.io/posts/some-other-random-post</loc>
-<lastmod>2018-01-21T00:00:00+00:00</lastmod>
-</url>
-<url>
-<loc>https://octavifs.github.io/posts/some-random-intro</loc>
-<lastmod>2018-01-22T00:00:00+00:00</lastmod>
-</url>
-<url>
-<loc>https://octavifs.github.io/about</loc>
-</url>
-<url>
-<loc>https://octavifs.github.io/</loc>
-</url>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://octavifs.me/projects/</loc>
+    <lastmod>2017-08-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/about/</loc>
+    <lastmod>2017-08-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/post/docker-for-ai-development-and-deployment/</loc>
+    <lastmod>2019-01-11T14:05:17+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</loc>
+    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/post/fractal-image-compression/</loc>
+    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/project/diabetic_retinopathy/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/project/lucanode/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/project/nbsharing/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/project/ubimind/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/tags/bci/</loc>
+    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/tags/eeg/</loc>
+    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/tags/fractals/</loc>
+    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/</loc>
+    <lastmod>2017-08-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/post/</loc>
+    <lastmod>2019-01-11T14:05:17+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/project/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/tags/tagb/</loc>
+    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://octavifs.me/tags/</loc>
+    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
 </urlset>

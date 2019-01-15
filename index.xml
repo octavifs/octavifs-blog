@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Octavi Font</title>
+    <link>https://octavifs.me/</link>
+    <description>Recent content on Octavi Font</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Aug 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://octavifs.me/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Projects</title>
+      <link>https://octavifs.me/projects/</link>
+      <pubDate>Wed, 02 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://octavifs.me/projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://octavifs.me/about/</link>
+      <pubDate>Wed, 02 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://octavifs.me/about/</guid>
+      <description>Hi, I&amp;rsquo;m Octavi Font. I&amp;rsquo;m a software engineer based in Barcelona focused on the AI for healthcare space.</description>
+    </item>
+    
+    <item>
+      <title>Docker for AI Development and Deployment</title>
+      <link>https://octavifs.me/post/docker-for-ai-development-and-deployment/</link>
+      <pubDate>Fri, 11 Jan 2019 14:05:17 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/docker-for-ai-development-and-deployment/</guid>
+      <description>Making the transition from developing models to deployment repeatable
+ TBD</description>
+    </item>
+    
+    <item>
+      <title>Designing a UI for EEG Experiments</title>
+      <link>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</link>
+      <pubDate>Thu, 10 Jan 2019 21:54:12 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</guid>
+      <description>&lt;p&gt;How I created a UI to standarize EEG captures with the Emotiv Epoc+ and Electron.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fractal Image Compression</title>
+      <link>https://octavifs.me/post/fractal-image-compression/</link>
+      <pubDate>Thu, 10 Jan 2019 21:45:43 +0100</pubDate>
+      
+      <guid>https://octavifs.me/post/fractal-image-compression/</guid>
+      <description>&lt;p&gt;Did you know it is possible to encode any image as a set of fractals?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>DIABETIC RETINOPATHY</title>
+      <link>https://octavifs.me/project/diabetic_retinopathy/</link>
+      <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
+      
+      <guid>https://octavifs.me/project/diabetic_retinopathy/</guid>
+      <description>Auto screening of Digital Fundus Imaging Automatic screening of diabetic retinopathy using digital fundus imaging on retina.
+Currently working on this. TBD.</description>
+    </item>
+    
+    <item>
+      <title>LUCANODE</title>
+      <link>https://octavifs.me/project/lucanode/</link>
+      <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
+      
+      <guid>https://octavifs.me/project/lucanode/</guid>
+      <description>Automatic lung cancer nodule detection Abstract Lung cancer is both the deadliest and one of the most frequently diagnosed forms of the disease. The main cause for the low survivability of lung cancer is due to its lack of early symptoms, which are only detected in terminal stages of the disease. It has been demonstrated that performing screenings in high-risk population increased the survivability by 20% but detecting lung lesions in CT imaging is time consuming and highly dependent on the skill of the radiologist.</description>
+    </item>
+    
+    <item>
+      <title>NBSHARING</title>
+      <link>https://octavifs.me/project/nbsharing/</link>
+      <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
+      
+      <guid>https://octavifs.me/project/nbsharing/</guid>
+      <description>Share your data science reports Developed a pastebin for jupyter notebooks. Very useful to share reports with your clients and colleagues in a private manner. Just drag &amp;amp; drop your notebook and you will get a link you can share.
+It&amp;rsquo;s free to use. Enjoy.</description>
+    </item>
+    
+    <item>
+      <title>UBIMIND</title>
+      <link>https://octavifs.me/project/ubimind/</link>
+      <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
+      
+      <guid>https://octavifs.me/project/ubimind/</guid>
+      <description>EEG powered wheelchair TBD</description>
+    </item>
+    
+  </channel>
+</rss>
