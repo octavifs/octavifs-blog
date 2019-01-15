@@ -1,8 +1,9 @@
+set -e
 hugo
 mv public ../
-checkout master
+git checkout master
 cp -R ../public .
 rm -rf ../public
-git commit -m $1
+git commit -m "$@"
 git push
 git checkout devel
