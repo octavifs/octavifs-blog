@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fractals on Octavi Font</title>
-    <link>https://octavifs.me/tags/fractals/</link>
+    <link>/tags/fractals/</link>
     <description>Recent content in Fractals on Octavi Font</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 10 Jan 2019 21:45:43 +0100</lastBuildDate>
     
-	<atom:link href="https://octavifs.me/tags/fractals/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/fractals/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Fractal Image Compression</title>
-      <link>https://octavifs.me/post/fractal-image-compression/</link>
+      <link>/post/fractal-image-compression/</link>
       <pubDate>Thu, 10 Jan 2019 21:45:43 +0100</pubDate>
       
-      <guid>https://octavifs.me/post/fractal-image-compression/</guid>
+      <guid>/post/fractal-image-compression/</guid>
       <description>&lt;p&gt;Did you know it is possible to encode any image as a set of fractals?&lt;/p&gt;</description>
     </item>
     

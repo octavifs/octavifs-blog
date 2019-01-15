@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Eeg on Octavi Font</title>
-    <link>https://octavifs.me/tags/eeg/</link>
+    <link>/tags/eeg/</link>
     <description>Recent content in Eeg on Octavi Font</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 10 Jan 2019 21:54:12 +0100</lastBuildDate>
     
-	<atom:link href="https://octavifs.me/tags/eeg/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/eeg/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Designing a UI for EEG Experiments</title>
-      <link>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</link>
+      <link>/post/designing-ui-eeg-capturing-experiments/</link>
       <pubDate>Thu, 10 Jan 2019 21:54:12 +0100</pubDate>
       
-      <guid>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</guid>
+      <guid>/post/designing-ui-eeg-capturing-experiments/</guid>
       <description>&lt;p&gt;How I created a UI to standarize EEG captures with the Emotiv Epoc+ and Electron.&lt;/p&gt;</description>
     </item>
     

@@ -2,50 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects on Octavi Font</title>
-    <link>https://octavifs.me/project/</link>
+    <link>/project/</link>
     <description>Recent content in Projects on Octavi Font</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 10 Jan 2019 19:06:20 +0100</lastBuildDate>
     
-	<atom:link href="https://octavifs.me/project/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>DIABETIC RETINOPATHY</title>
-      <link>https://octavifs.me/project/diabetic_retinopathy/</link>
+      <link>/project/diabetic_retinopathy/</link>
       <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
       
-      <guid>https://octavifs.me/project/diabetic_retinopathy/</guid>
+      <guid>/project/diabetic_retinopathy/</guid>
       <description>Auto screening of Digital Fundus Imaging Automatic screening of diabetic retinopathy using digital fundus imaging on retina.
 Currently working on this. TBD.</description>
     </item>
     
     <item>
       <title>LUCANODE</title>
-      <link>https://octavifs.me/project/lucanode/</link>
+      <link>/project/lucanode/</link>
       <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
       
-      <guid>https://octavifs.me/project/lucanode/</guid>
+      <guid>/project/lucanode/</guid>
       <description>Automatic lung cancer nodule detection Abstract Lung cancer is both the deadliest and one of the most frequently diagnosed forms of the disease. The main cause for the low survivability of lung cancer is due to its lack of early symptoms, which are only detected in terminal stages of the disease. It has been demonstrated that performing screenings in high-risk population increased the survivability by 20% but detecting lung lesions in CT imaging is time consuming and highly dependent on the skill of the radiologist.</description>
     </item>
     
     <item>
       <title>NBSHARING</title>
-      <link>https://octavifs.me/project/nbsharing/</link>
+      <link>/project/nbsharing/</link>
       <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
       
-      <guid>https://octavifs.me/project/nbsharing/</guid>
+      <guid>/project/nbsharing/</guid>
       <description>Share your data science reports Developed a pastebin for jupyter notebooks. Very useful to share reports with your clients and colleagues in a private manner. Just drag &amp;amp; drop your notebook and you will get a link you can share.
 It&amp;rsquo;s free to use. Enjoy.</description>
     </item>
     
     <item>
       <title>UBIMIND</title>
-      <link>https://octavifs.me/project/ubimind/</link>
+      <link>/project/ubimind/</link>
       <pubDate>Thu, 10 Jan 2019 19:06:20 +0100</pubDate>
       
-      <guid>https://octavifs.me/project/ubimind/</guid>
+      <guid>/project/ubimind/</guid>
       <description>EEG powered wheelchair TBD</description>
     </item>
     

@@ -3,99 +3,99 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://octavifs.me/projects/</loc>
+    <loc>/projects/</loc>
     <lastmod>2017-08-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2017-08-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/post/docker-for-ai-development-and-deployment/</loc>
+    <loc>/post/docker-for-ai-development-and-deployment/</loc>
     <lastmod>2019-01-11T14:05:17+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/post/designing-ui-eeg-capturing-experiments/</loc>
+    <loc>/post/designing-ui-eeg-capturing-experiments/</loc>
     <lastmod>2019-01-10T21:54:12+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/post/fractal-image-compression/</loc>
+    <loc>/post/fractal-image-compression/</loc>
     <lastmod>2019-01-10T21:45:43+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/project/diabetic_retinopathy/</loc>
+    <loc>/project/diabetic_retinopathy/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/project/lucanode/</loc>
+    <loc>/project/lucanode/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/project/nbsharing/</loc>
+    <loc>/project/nbsharing/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/project/ubimind/</loc>
+    <loc>/project/ubimind/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://octavifs.me/tags/bci/</loc>
+    <loc>/tags/bci/</loc>
     <lastmod>2019-01-10T21:54:12+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/tags/eeg/</loc>
+    <loc>/tags/eeg/</loc>
     <lastmod>2019-01-10T21:54:12+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/tags/fractals/</loc>
+    <loc>/tags/fractals/</loc>
     <lastmod>2019-01-10T21:45:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/</loc>
+    <loc>/</loc>
     <lastmod>2017-08-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2019-01-11T14:05:17+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/project/</loc>
+    <loc>/project/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/tags/tagb/</loc>
+    <loc>/tags/tagb/</loc>
     <lastmod>2019-01-10T21:45:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://octavifs.me/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2019-01-10T21:54:12+01:00</lastmod>
     <priority>0</priority>
   </url>
