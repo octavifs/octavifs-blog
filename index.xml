@@ -31,31 +31,12 @@ I love turning open-ended research questions into products. I believe that the k
     </item>
     
     <item>
-      <title>Docker for AI Development and Deployment</title>
-      <link>/post/docker-for-ai-development-and-deployment/</link>
-      <pubDate>Fri, 11 Jan 2019 14:05:17 +0100</pubDate>
+      <title>HiDPI support on Ubuntu 19.04</title>
+      <link>/post/hidpi-support-on-ubuntu-19-04/</link>
+      <pubDate>Wed, 01 May 2019 22:12:19 +0200</pubDate>
       
-      <guid>/post/docker-for-ai-development-and-deployment/</guid>
-      <description>Making the transition from developing models to deployment repeatable
- TBD</description>
-    </item>
-    
-    <item>
-      <title>Designing a UI for EEG Experiments</title>
-      <link>/post/designing-ui-eeg-capturing-experiments/</link>
-      <pubDate>Thu, 10 Jan 2019 21:54:12 +0100</pubDate>
-      
-      <guid>/post/designing-ui-eeg-capturing-experiments/</guid>
-      <description>&lt;p&gt;How I created a UI to standarize EEG captures with the Emotiv Epoc+ and Electron.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Fractal Image Compression</title>
-      <link>/post/fractal-image-compression/</link>
-      <pubDate>Thu, 10 Jan 2019 21:45:43 +0100</pubDate>
-      
-      <guid>/post/fractal-image-compression/</guid>
-      <description>&lt;p&gt;Did you know it is possible to encode any image as a set of fractals?&lt;/p&gt;</description>
+      <guid>/post/hidpi-support-on-ubuntu-19-04/</guid>
+      <description>This is how I&amp;rsquo;ve setup my Thinkpad X1 Carbon with functional fractional scaling support on Ubuntu 19.04. Hopefully this post serves as a beacon for everyone wanting a way out of the current buggy mess that is fractional scaling on Linux. The only limitation of this solution is that it doesn&amp;rsquo;t support dual monitors with different DPI settings. External monitors work well, as long as the laptop screen is closed.</description>
     </item>
     
     <item>

@@ -13,18 +13,8 @@
   </url>
   
   <url>
-    <loc>/post/docker-for-ai-development-and-deployment/</loc>
-    <lastmod>2019-01-11T14:05:17+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/designing-ui-eeg-capturing-experiments/</loc>
-    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/fractal-image-compression/</loc>
-    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
+    <loc>/post/hidpi-support-on-ubuntu-19-04/</loc>
+    <lastmod>2019-05-01T22:12:19+02:00</lastmod>
   </url>
   
   <url>
@@ -48,25 +38,7 @@
   </url>
   
   <url>
-    <loc>/tags/bci/</loc>
-    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/eeg/</loc>
-    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/fractals/</loc>
-    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -78,7 +50,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-01-11T14:05:17+01:00</lastmod>
+    <lastmod>2019-05-01T22:12:19+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -89,14 +61,7 @@
   </url>
   
   <url>
-    <loc>/tags/tagb/</loc>
-    <lastmod>2019-01-10T21:45:43+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/</loc>
-    <lastmod>2019-01-10T21:54:12+01:00</lastmod>
     <priority>0</priority>
   </url>
   
