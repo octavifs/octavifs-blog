@@ -6,13 +6,11 @@ draft: false
 
 This is my recipe to install Ubuntu 19.04 Disco Dingo on the Lenovo Thinkpad X1 Carbon 6th gen (2018). This guide should serve you as well for Ubuntu 18.04 LTS, but the newer kernel and GNOME on 19.04 offer better power management and HiDPI support.
 
-<!-- more -->
+The X1 Carbon is an excellent laptop for developers, and even though its Linux support is good, getting it to work perfectly still requires some tinkering. This topic has been covered already, but there've been improvements in hardware support over the last year that are not reflected on older articles. Hopefully this will serve as an up-to-date, streamlined version on how to set it up after installing Ubuntu.
 
 ![Thinkpad X1 Carbon 6th gen (2018)](/media/post/thinkpad-x1-carbon-6th-gen-2018-on-ubuntu-19-04/thinkpad_x1c_banner.jpg)
 
 *Mugshot: The culprit behind this article, suspended*
-
-The X1 Carbon is an excellent laptop for developers, and even though its Linux support is good, getting it to work perfectly still requires some tinkering. This topic has been covered already, but there've been improvements in hardware support over the last year that are not reflected on older articles. Hopefully this will serve as an up-to-date, streamlined version on how to set it up after installing Ubuntu.
 
 This setup should leave the laptop fully working, except for the fingerprint reader, for which there are no available drivers. Everything else is 100% functional.
 
