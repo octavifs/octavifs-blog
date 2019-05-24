@@ -19,6 +19,10 @@
       border: 2px solid $media-border;
       box-shadow: 0 1px 4px $box-shadow-darker;
       transition: transform $easing $speed;
+
+      &:hover {
+        transform: rotate(45deg);
+      }
     }
 
     & .link-title {
@@ -37,7 +41,7 @@
       min-width: 100px;
     }
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: $tablet) {
       width: 50%;
     }
   }

@@ -14,6 +14,7 @@ canonifyurls = true
   github = "octavifs"
   linkedin = "octavifs"
   #medium = "octavifs"
+  customStyle = "styles/custom.scss"
 
 [[menu.main]]
   name = "Blog"

@@ -101,6 +101,10 @@ The following social network icons are available:
 
 You can choose someone to display, the recommend number is 7 icons.
 
+Icons are provided by [iconfont](https://www.iconfont.cn/) by default, but you
+can choose to use [FontAwesome](https://fontawesome.com/) instead by adding
+`fontAwesome = true` to the `[params]` section.
+
 **SEO**
 
 The hugo-nuo theme support [Google](https://www.google.com/webmasters/), [Bing](https://www.bing.com/toolbox/webmaster/), [Baidu](https://zhanzhang.baidu.com/), [Sogou](http://zhanzhang.sogou.com/), [360](http://zhanzhang.so.com/) webmaster's meta verification tool, you can activate as required. The `seotitle` and `description` will show in search results and browser title.
@@ -221,7 +225,7 @@ weight: 40
 ---
 ```
 
-The links page read data from `data/link.yml` file, now you can add friend's links there. The format looks like:
+The links page read data from `data/links.toml` file, now you can add friend's links there. The format looks like:
 
 ```toml
 [chekun]
@@ -237,7 +241,7 @@ The links page read data from `data/link.yml` file, now you can add friend's lin
   description = "Another full-stack developer"
 ```
 
-The links page need friend's avatar, finally you should add friend's avatar to `content/media/links` directory and link to avatar in the `links.yml` file.
+The links page need friend's avatar, finally you should add friend's avatar to `content/media/links` directory and link to avatar in the `links.toml` file.
 
 ### The about page
 
@@ -288,6 +292,57 @@ for how to construct your resume.
 The resume page will be located at `/resume` off your website root. Different
 from the about page, the resume page is intended as a one pager that you
 can print out for job hunting.
+
+## Custom theme
+
+If you don't want change default theme SCSS files, you can override styles with an custom SCSS file. Set file in your `config.toml` as below.
+
+```toml
+[params]
+  # Overrid theme styles in this file
+  customStyle = "styles/custom.scss"
+```
+
+Then create `styles/custom.scss` file and write your own styles there. your custom rules will override the default ones. you can place custom.scss in theme-scoped or site-scoped assets folder.
+
+```
+.
+├── README.md
+├── assets
+│   └── styles
+│       └── custom.scss ✅
+├── config.toml
+├── content
+└── themes
+    └── hugo-nuo
+        ├── assets
+            │   ├── images
+            │   ├── scripts
+            │   ├── service-worker.js
+            │   └── styles
+                    ├── partials
+                    ├── main.scss
+            │       └── custom.scss ✅
+            └── theme.toml
+```
+
+If you want to change avatar or favicons without modifying this theme, just copy `themes/hugo-nuo/assets` and `themes/hugo-nuo/static` to your blog root dir and keep the filename the same with theme.
+
+```bash
+~/D/@/my-blog ❯❯❯ tree -L 2
+.
+├── config.toml
+├── assets
+│   └── images          <-- replace images
+├── static
+│   ├── favicon.ico     <-- replace favicon.ico
+│   ├── icons           <-- replace icons
+│   └── manifest.json
+└── themes
+    └── hugo-nuo
+```
+
+Above is your blog repo structure, now you can replace images with your own, and don't need to modify theme anymore.
 
 ## Build
 
