@@ -13,6 +13,18 @@
   </url>
   
   <url>
+    <loc>/</loc>
+    <lastmod>2019-05-03T00:57:34+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-05-03T00:57:34+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/thinkpad-x1-carbon-6th-gen-2018-on-ubuntu-19-04/</loc>
     <lastmod>2019-05-03T00:57:34+02:00</lastmod>
   </url>
@@ -38,30 +50,18 @@
   </url>
   
   <url>
+    <loc>/project/</loc>
+    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/project/ubimind/</loc>
     <lastmod>2019-01-10T19:06:20+01:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2017-08-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-05-03T00:57:34+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/project/</loc>
-    <lastmod>2019-01-10T19:06:20+01:00</lastmod>
     <priority>0</priority>
   </url>
   
