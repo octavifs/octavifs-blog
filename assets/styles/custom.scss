@@ -1,3 +1,11 @@
 .main {
     max-width: 50rem;
 }
+
+.avatar, .links-list .link-item .link-avatar {
+    transition-property: none;
+
+    &:hover {
+        transform: unset;
+    }
+}
