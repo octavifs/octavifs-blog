@@ -10,6 +10,7 @@ How can you improve the performance of an OCR LSTM model when applied to a setti
 
 ![Passports nowadays have both biometrics and features enabling its readability via OCR software](/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/passport-article-heading.jpg)
 
+
 ### The big picture
 This story starts as part of a processes optimization project I'm conducting with a client. They wanted to develop some in-house technology to scan IDs automatically to speed up their enrollment process. This required the creation of an entire OCR pipeline: automatic segmentation and detection of id cards, detection of the fields, preprocessing the images and finally applying OCR on the segments to extract the data.
 
@@ -24,28 +25,44 @@ OCR transcription
 This case, while not particularly bad, is a pretty good example of the issues I had with the default OCR model. The first one being that the character `<` tends to be confused with `S` or `K` and the second one being that `<` is transcribed as multiple characters (`<S<` in the separator between `FONT` and `SOLA`).
 
 
-### Why focus on the MRZ? What is it?
-There is a wide variety of valid state-issued ID cards that citizens can use for identification purposes. From passports, to national ID cards, social security numbers, driving licences, etc. You also need to take into account the edge cases introduced by alien citizens, which have their own kind of IDs and Visas, and wildly different formats depending on the immigration policies of the state they reside in. And if that wasn't enough, be sure that the same type of ID card will have different formats in circulation, and you need to support all of them.
+### Machine-Readable Zone (MRZ) to the rescue
+There is a wide variety of valid state-issued ID cards that citizens can use for identification purposes: passports, national ID cards, social security numbers, driving licences, etc. You also need to take into account the edge cases introduced by alien citizens, which have their own kind of IDs and Visas, with their own set of formats and idiosyncrasies that vary from country to country. And if that wasn't enough, be sure that the same type of ID card will have different formats in circulation, and you need to support all of them.
 
-First task then, was to find the least common denominator that I could use to extract data from the largest possible set of ID cards with the least amount of work. Thankfully, this is not 
+Since the problem space is too big to be tackled at once, my plan was to narrow its scope. That meant finding a strategy applicable to the largest possible subset of ID cards. Thankfully, the necessity to scan IDs fast is not new. In fact, many passports and travel documents include a region for optical character recognition as far back as the 1980s. This region is known as *Machine-Readable Zone (MRZ)* and has been standardized by the [ICAO Document 9303](https://www.icao.int/publications/pages/publication.aspx?docnum=9303) / [ISO-IEC 7501-1](https://www.iso.org/standard/45562.html).
 
-
-Different countries have different formats, different versions of the same format, 
-[Wikipedia on MRZ](https://en.wikipedia.org/wiki/Machine-readable_passport)
-Fortunately, most new state issued id cards and passports have a machine readable zone, containing most of the id information in a format prepared for OCR. MRZ is a standard (ISO xxxx) introduced in the 1980s that has seen wide deployment throghout. Try to put some more info about the current usage and deployment of this technology. Nowadays, most id cards also have an RFID chip for biometrics, which is what people use in the ePassport gates.
-
-![Passport with MRZ string. Source: https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/identity-management/naming-procedures/read-travel-documents.html](/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/mrz-passport-sample.jpg)
+{{< figure src="/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/mrz-passport-sample.jpg" title="Passport with MRZ string" >}}
 
 
-Now that I've explained that the MRZ is a standard, and that mostly DNI, NIE and passports have it, and also that it contains most of the information that the client needed for identification purposes, say that OK, we are good to go. Ignoring the rest of the system, what I am going to focus on is the following, given a piece of an image with an MRZ string, how can we parse it best.
+### TD1 documents in detail
+The [ICAO Document 9303](https://www.icao.int/publications/pages/publication.aspx?docnum=9303) defines different *Machine-Readable travel documents* based on their format. Passports are defined as **TD3 sized** and credit-card tyled documents are **TD1 sized**. I will center the discussion around the latter, since the happy path for my client is based around the [spanish national identity card](https://en.wikipedia.org/wiki/Documento_Nacional_de_Identidad_(Spain)).
 
-![https://www.researchgate.net/publication/269629982_A_Proposal_for_a_Unified_Identity_Card_for_Use_in_an_Academic_Federation_Environment](/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/mrz-breakdown.png)
+{{< figure src="/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/dni-fake.jpg" title="Spanish national identity card. A TD1 sized travel document">}}
 
-Explain that this is essentially what we are trying to extract from the image. Say that this fits within an API, by which you upload an image and then get back a json with all the data.
+The standard affects the size, structure and contents of the document. It segments it in 7 zones, front and back. Each of those zones are used for a particular piece of information, that needs to appear in a certain order. This is very helpful from an image preprocessing perspective, since it ensures that the segmentation efforts performed on one type of card will easily transfer to another as long as it adheres to the standard.
+
+{{< figure src="/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/td1-zones.jpg" title="TD1 card zones" attr="source" attrlink="https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf">}}
+
+The MRZ in TD1 sized documents consists on 3 lines of ASCII text, 30 characters in length. The only valid characters are numerals `[0-9]`, the 26 capital Latin letters `[A-Z]` and the filler character `<`. For more specific rules regarding apostrophes, diacritical marks, transliteration, etc. there is a good breakdown available on [the wikipedia article](https://en.wikipedia.org/wiki/Machine-readable_passport#Names). Below I've added a detailed diagram on the fields and format for the MRZ string:
+
+{{< figure src="/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/mrz-breakdown.png" title="TD1 MRZ string breakdown" attr="source" attrlink="https://www.researchgate.net/publication/269629982_A_Proposal_for_a_Unified_Identity_Card_for_Use_in_an_Academic_Federation_Environment">}}
 
 
-## Initial approach and limitations
-Explain that the initial cheap approach was to use tesseract, which is an open source OCR engine, that has been there forever. It currently implements an LSTM network and can be quite configurable.
+### Initial approach and limitations
+Now that we have the introduction out of the way, we can delve into the implementation details of the solution. As I mentioned initially, the plan is to develop an OCR solution capable of parsing the MRZ string of a pre-segmented region of interest. On the surface, the problem looks quite straightforward: the character set is restricted and there is good contrast in the area, so as long as the OCR engine is accurate, we just need to parse its output acording to the MRZ format that I detailed on the section above and we'd be done.
+
+{{< figure src="/media/post/transfer-learning-mac-gyver-ensembling-ocr-lstm-probabilistic-word-predictor/mrz-roi.png" title="ROI used as input for our MRZ OCR implementation">}}
+
+After some research on OCR engines, I found the [Tesseract project](https://github.com/tesseract-ocr/tesseract). Tesseract is an open source OCR library, currently maintained by Google. It is a project with a long history, dating as far back as the 90's, initially developed under the umbrella of HP. On its latest version (v4) there is a new engine based on Long short-term memory neural networks, with improved accuracy over its predecessor. It also supports multiple languages, segmentation modes and tuning options. You can easily install it on ubuntu via `apt` and it is simple to integrate in a python project thanks to the [pytesseract](https://pypi.org/project/pytesseract/) bindings.
+
+With such a strong initial impression, it was time to put it through the paces, so I proceeded to test it against a small dataset of real-case MRZs. After some tries, I settled on the following runtime options:
+
+1. Language needs to be set as Latin
+2. The rest of interesting options only work on the previous engine
+3. It is not even advertised how to install languages for the previous engine
+4. Even on the previous engine, the options are kinda broken
+5. Even with this, the new engine works better, but you pretty much cannot tune anything
+
+Now I want to put here the parameters I use tesseract with, why I use them, and what else is tere. Basically say that the language package from the old engine is incompatible with the new and that many flags, such as the dictionary, or the one to limit the output of characters to a subset only work with the old engine. Which is a total shame, since the new engine is better overall, but far from perfect. Since names and the character `<` is unlikely to appear in the training corpus, the results for it are rather abysmal, and we just get lots of garbage.
 
 One of the issues with tesseract under this is that it is usually trained on a corpus of books, not ids. So basically the network is not used to the typesetting and neither is used to the names. The names are also quite problematic, since they can vary quite a lot. What I did with that was basically play around with the settings, until I found a way to load what was a network based on latin charset, without constraint on language, which was about the best approach.
 
@@ -69,7 +86,7 @@ So basically, there were problems mainly on performing OCR on the names string. 
 > FONTCSOLACKLOCTAVICKCCKKLKLKLKKĖ<Ė<
 
 
-## Initial intuition
+## Intuition
 Somehow I should introduce the idea that yes, the data is garbled in a way, but not so much that you couldn't infer what the original name was most of the time. I was thinking that a dictionary could be used probably and then calculate some metric of distance to the words. Or maybe I could use something like a text predictor, similar technology than what we have in our smartphones, but applied to the OCR output.
 
 Then go with intuiton number one. Maybe I could use a dictionary of names and then try to approximate the string to the name that is closest.
@@ -91,7 +108,7 @@ Now comes the second insight. If we treat the input as a conditional probability
 And now we have all necessary elements to solve the problem effectively. Essentially what we want is to traverse our state machine up to n steps (n being the length of the string) and extract the branch that maximizes our probability. We are not traversing graphs, and we can just apply graph theory and algorithms for path finding.
 
 
-## Problem setup
+## Implementation
 And then basically explain that I implemented a bastardized greedy search that is not optimal, but works mostly fine in practice (as in, we want to explore a few paths, but it usually doesn't make a lot of sense to deviate too much from immediate best matches). Usually taking a suboptimal step will already pay off at the 2nd or 3rd degree, so you don't need to look that deep to have results that are cool.
 
 ## Results
@@ -102,7 +119,7 @@ Explain as well that this had the advantage of being easy to expand. Adding more
 
 Another plus of this approach is that any improvement on the LSTM engine automatically improves the system. And if we essentially worked the system to suit it to our own purposes, then merging the improvements together becomes much harder. So there you go, an added benefit.
 
-## Closing
+## Conclusions
 It would be cool to explain how this ties up with the research, but it might be even a better idea to do like a white paper on word predictor systems on another article.
 
 Explain that I've seen tries used for autocomplete, but never combined with the conditional probability aspects that I am applying in this case.
