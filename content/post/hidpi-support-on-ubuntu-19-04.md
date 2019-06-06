@@ -8,7 +8,7 @@ This is how I've setup my Thinkpad X1 Carbon with functional fractional scaling 
 
 This solution should work on any laptop with a high resolution screen. Most of this information is not specific to Ubuntu either, just GNOME. Still, some of the package names or locations for config files will probably be different in your distro.
 
-<!-- more -->
+<!--more-->
 
 ![Ubuntu Display Settings with fractional scaling support enabled](/media/post/hidpi-support-on-ubuntu-19-04/fractional_scaling_displays.png)
 

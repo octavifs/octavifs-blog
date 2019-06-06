@@ -8,6 +8,6 @@ draft: true
 
 Making the transition from developing models to deployment repeatable
 
-<!--More-->
+<!--more-->
 
 TBD
