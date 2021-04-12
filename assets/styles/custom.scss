@@ -1,3 +1,39 @@
+// Change global text style
+html {
+    font-family: 'EB Garamond', 'Times New Roman', Times, serif;
+}
+
+// Center layout with max-width and responsiveness
+body {
+    margin: auto;
+    max-width: 80em;
+}
+.site-header {
+    left: unset !important;
+}
 .main {
-  max-width: 50rem;
+    max-width: 50rem;
+}
+
+// fix link styles on the sidebar
+.site-header a {
+    opacity: 1 !important;
+}
+
+.site-header a:hover {
+    text-decoration: underline;
+}
+
+// disable transformations on the avatar
+.avatar, .links-list .link-item .link-avatar {
+    transition-property: none;
+
+    &:hover {
+        transform: unset;
+    }
+}
+
+// Unify font family in the blog title
+.title {
+    font-family: 'EB Garamond', 'Times New Roman', Times, serif;
 }

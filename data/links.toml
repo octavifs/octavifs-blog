@@ -1,0 +1,23 @@
+[lucanode]
+  title = "LUCANODE"
+  link = "/project/lucanode"
+  avatar = "/media/links/lucanode.jpeg"
+  description = "Lung cancer nodule detection"
+
+[nbsharing]
+  title = "NBSHARING"
+  link = "/project/nbsharing"
+  avatar = "/media/links/nbsharing.jpeg"
+  description = "Share your data science reports"
+
+[ubimind]
+  title = "UBIMIND"
+  link = "/project/ubimind"
+  avatar = "/media/links/ubimind.jpeg"
+  description = "EEG-powered wheelchair"
+
+[diabetic_retinopathy]
+  title = "DIABETIC RETINOPATHY"
+  link = "/project/diabetic_retinopathy"
+  avatar = "/media/links/diabetic_retinopathy.jpeg"
+  description = "Auto screening of Digital Fundus Imaging"
