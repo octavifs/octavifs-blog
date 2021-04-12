@@ -12,3 +12,4 @@ Thumbs.db
 Gemfile.lock
 yarn.lock
 /resources
+/public
