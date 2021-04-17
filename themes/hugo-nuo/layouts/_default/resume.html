@@ -23,7 +23,10 @@
     {{ if (isset $.Site.Data.resume "contact") }}
     <ul class="contact">
       {{ range $.Site.Data.resume.contact.list }}
-        <li><a href="{{ .url }}">{{ .title }}</a></li>
+        <li>
+          <strong>{{ .class }}:</strong>
+          <a href="{{ .url }}">{{ .title }}</a>
+        </li>
       {{ end }}
     </ul>
     {{ end }}
