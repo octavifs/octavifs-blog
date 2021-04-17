@@ -1,0 +1,23 @@
+[[redirects]]
+    from = "https://octavifs.me/*"
+    to = "https://octavifs.com/:splat"
+    status = 301
+    force = true
+
+[[redirects]]
+    from = "https://www.octavifs.me/*"
+    to = "https://octavifs.com/:splat"
+    status = 301
+    force = true
+
+[[redirects]]
+    from = "http://octavifs.me/*"
+    to = "https://octavifs.com/:splat"
+    status = 301
+    force = true
+
+[[redirects]]
+    from = "http://www.octavifs.me/*"
+    to = "https://octavifs.com/:splat"
+    status = 301
+    force = true
