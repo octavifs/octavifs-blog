@@ -28,6 +28,29 @@
     </ul>
     {{ end }}
 
+    {{ if (isset $.Site.Data.resume "experience") }}
+    <h3>Work Experience</h3>
+    {{ range $.Site.Data.resume.experience.list }}
+      <div class="meta">
+        <div class="upper-row">
+          <h4 class="job-title">{{ .title }}, {{ .name }}</h4>
+          <div class="year">{{ .year }}</div>
+        </div>
+        <div class="company">{{ .company }}, {{ .location }}</div>
+      </div>
+      <div class="details">
+      {{ if (isset . "description") }}
+        <div> {{ .description | markdownify }} </div>
+      {{ end }}
+        <ul>
+        {{ range .projects }}
+          <li> {{ . }} </li>
+        {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+    {{ end }}
+
     {{ if (isset $.Site.Data.resume "education") }}
     <h3>Education</h3>
     {{ range $.Site.Data.resume.education.list }}
@@ -41,37 +64,17 @@
     {{ end }}
     {{ end }}
 
-    {{ if (isset $.Site.Data.resume "experience") }}
-    <h3>Experiences</h3>
-    {{ range $.Site.Data.resume.experience.list }}
-      <div class="meta">
-        <div class="upper-row">
-          <h4 class="job-title">{{ .title }}, {{ .name }}</h4>
-          <div class="year">{{ .year }}</div>
-        </div>
-        <div class="company">{{ .company }}, {{ .location }}</div>
-      </div>
-      <div class="details">
-      {{ if (not (isset . "description")) }}
-        <ul>
-        {{ range .projects }}
-          <li> {{ . }} </li>
-        {{ end }}
-        </ul>
-      {{ else }}
-        <p> {{ .description | markdownify }} </p>
-      {{ end }}
-      </div>
-    {{ end }}
-    {{ end }}
-
     {{ if (isset $.Site.Data.resume "skill") }}
     <h3>Skills</h3>
-    <ul class="skill">
-      {{ range $.Site.Data.resume.skill.list }}
-        <li> {{ .name }} : {{ .level }}% </li>
+    {{ range $.Site.Data.resume.skill.list }}
+    <div class="meta">
+      <div class="upper-row">
+          <h4 class="job-title">{{ .section }}</h4>
+        </div>
+        <div class="school">{{ delimit .items ", " }}</p>
+    </div>  
       {{ end }}
-    </ul>
+    </p>
     {{ end }}
 
     {{ if (isset $.Site.Data.resume "languages") }}
