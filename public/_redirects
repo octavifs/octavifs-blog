@@ -1,0 +1,3 @@
+# octavifs.me redirect to octavifs.com
+http://octavifs.me/* https://octavifs.me/:splat 301!
+https://octavifs.me/* https://octavifs.me/:splat 301!

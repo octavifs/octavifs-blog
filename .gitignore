@@ -12,4 +12,5 @@ Thumbs.db
 Gemfile.lock
 yarn.lock
 /resources
-/public
+/public/*
+!/public/_redirects
