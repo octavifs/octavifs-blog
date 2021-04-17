@@ -1,6 +1,7 @@
 ---
 title: "Interactive Graphs on Static Notebooks With Altair"
 date: 2019-06-04T16:58:54+02:00
+cover: "/media/post/altair-graphs/altair-logo-light.png"
 draft: false
 ---
 
