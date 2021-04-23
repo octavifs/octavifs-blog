@@ -6,11 +6,63 @@ cover: "/media/post/deep-learning-in-production-part1/conda-logo.png"
 draft: true
 ---
 
-Managing repeatable python development environments can be tricky. Dealing with deep learning libraries even more so. Here are my techniques to facilitate the creation of repeatable environments you can share with your team, use your GPUs for training and minimize the amount of external setup.
+Reproducible python environments can be tricky, especially so when your codebase requires external non-python dependencies that need to be installed outside your virtualenv. Docker is the defacto tool to solve this problem nowadays but, if your workflow requires access to specific hardware resources such as GPUs, things get a bit more complicated.
+
+In this post I cover my approach to repeatable environments with GPU support and a minimum amount of external setup.
 
 <!--more-->
 
-TBD
+![XKCD python environment madness](/media/post/deep-learning-in-production-part1/python_environment_xkcd.png "source: [https://xkcd.com/1987](https://xkcd.com/1987)")
+
+## Python package management
+
+Python's package management story is a convoluted affair compared to Rust's [Cargo](https://doc.rust-lang.org/cargo/) or Javascript's [npm](https://www.npmjs.com/). The language was publicly released 30 years ago and the development landscape has changed much since then. There's never been more people using it, on all kinds of projects, at all sorts of scales. This doesn't come without drawbacks, however, and currently one of the roughest edges when developing in python revolves around package management and distribution.
+
+Talk about pip. pip allows you to install packages, resolves dependencies, and builds binaries, if you need to build something from source. Nowadays there are wheels as well, which is prepackaged binaries, which is very nice. Mostly because before wheels, you needed to have all the dev libraries installed to be able to build a python package, if it had any sort of C extensions or similar. And this, apart from the time it requires to do the build itself, it resulted in some hunting down instructions to add all of the dependencies manually, via apt-get or yum, or whatever your linux distro requires. And that is almost a best-case scenario, because if you were using Windows or OSX, you might be fucked.
+
+Then OK, you have your packages installed. But you might need to work with more than one python version. Or maybe you need different library versions in 2 different projects. Then what? This is why they created virtualenvs for. Now, this is almost a thing of the past, because instead of a virtualenv, what we do is create a docker image, build everything there and bam, isolated pip. And while this is amazing, if your environment requires the usage of special resources, such as GPUs, for the training of deep learning models, or whatever, you might actually need to go back to this virtualenv thingies.
+
+Now, virtualenv is OK, but not the latest thing. You can use pipenv, or poetry, which are newer generation package managers, that integrate virtualenvs, and also have lockfiles, and more strict dependency trackers. Even pip itself is actually improving in terms of package resolution, and avoiding conflicst on the python dependency graph. But it is just not great.
+
+Another problem with all of this crap is that OK, even if you do all of this,
+
+
+If you've used python to write more than a simple few scripts you are probably already familiar with `pip` and `virtualenv`. When you need to work on multiple projects, the ability to create isolated python environments in your development machine is a must. This allows you to work with different python versions simultaneously, conflicting package versions
+You might have to work with different python versions simultaneously, conflicting package versions or j
+
+, especially if you had the need to deal with multiple projects and codebases, 
+
+
+The language is used by more people than ever before, for more purposes than ever, on much larger scales.
+
+Most of you will be familiar with the `pip` package manager and the usage of `virtualenv` to create isolated python environments.
+
+Python package management story is a much more convoluted affair than Rust's Cargo or Javascript's npm. The language was publically released more than 30 years ago and 
+Python's first public release was 30 years ago already, and much has changed since the early 90's. The language has grown a lot, in features and usages, from its early 1.x days.
+
+Python's first public release was 30 years ago, and much has changed since that. Both in the language and
+Python is a pretty senior programming language, first published to the public 30 years ago already. And the times have changed. The language has greatly evolved, going from a convenient language to write some quick scripts in, to something used by millions to develop large codebases in, with very complex toolchains and business built around it.
+
+Essentially, the language has grown a lot, python is something else for every developer, and package management can be pretty messy.
+
+I'm pretty sure you are already familiar with the concept of virtualenvs and pip. One to create separate python environments, with specific python versions, if needed. And the other to install python packages.
+
+There are other strategies, such as the classic `setup.py` and `disttools` to build packages. Then also `easy_install`, which I think is deprecated already?
+Explain here a bit around pip, virtualenvs, docker, conda, etc.
+
+A history of python packaging until 2009 (itself, history): [source](https://blog.startifact.com/posts/older/a-history-of-python-packaging.html)
+
+## Specific problems in deep learning
+What about deep learning development is extra complicated? Why does the normal approach not work?
+
+## Conda to the rescue
+
+Mention the problems you typically find more in detail, and why dependencies should be pinned.
+
+- Libraries are still young and under heavy development. API may not be super stable and some times breaking changes are introduced between minor releases. If dependencies are not pinned, you may inadvertedly end up with broken environments across your team, or worse, in your production image!
+- Unfortunately, there are many dependencies on C libraries and external shit being installed. Also, CUDA toolkit and NVIDIA drivers can be a pain in the bum. And frameworks as Tensorflow or PyTorch tend to be pretty particular as to which versions you need installed. This can also be a problem if you have to switch between projects with different technologies pretty frequently, if you have to uninstall your CUDA libraries, maybe even drivers, to adapt them to a specific version. Or maybe you need to force an upgrade on some libraries, with the extra rework required, just so that you can run it alongside your new stack now, etc.
+
+PIP has gotten better, now it has wheels, with binaries built in, so you don't need to have a full dev environment to be able to build the libraries you need to install, which is nice. And there are other possibilities such as pipenv, poetry or conda. And I wonder if you do weird things. Ah, you don't at this zoom level. I wonder if this is actually the normal zoom level? And the other one is some zoomed-in bullshit that I am using? Now that I have reset the zoom level, will it work without me going mad? Because all of these break lines moving back and forth were really making me go a bit looney.
 
 Maybe I should divide into a multiple series of posts? Like, it makes sense to explain how to go from a simple notebook that you run randomly as an example from the pytorch or keras website, so something of a more repeatable environment.
 

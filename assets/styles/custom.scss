@@ -37,3 +37,15 @@ body {
 .title {
     font-family: 'EB Garamond', 'Times New Roman', Times, serif;
 }
+
+.post-content figure {
+    text-align: center;
+}
+
+.post-content figure img {
+    margin: 0 auto !important;
+}
+
+.post-content figure img, .post-content img {
+    box-shadow: unset !important;
+}
