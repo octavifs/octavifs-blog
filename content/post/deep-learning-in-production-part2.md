@@ -1,6 +1,5 @@
 ---
 title: "Deep Learning in Production Part 2: Dockerize for deployment"
-author: "Octavi Font"
 date: 2021-04-16T14:05:17+01:00
 cover: "/media/post/deep-learning-in-production-part2/docker-logo.jpg"
 draft: true

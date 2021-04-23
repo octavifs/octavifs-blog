@@ -8,6 +8,7 @@ canonifyurls = true
 
 [params]
   avatar = "images/avatar.jpeg"
+  author = "Octavi Font"
   seotitle = "Octavi Font - Software Engineer"
   subtitle = "~ AI for healthcare - Consulting ~"
   description = "Octavi is a Software Engineer focused on solving infrastructure challenges for Data Science teams."
