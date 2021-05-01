@@ -1,6 +1,5 @@
 ---
 title: "Deep Learning Model Testing"
-author: "Octavi Font"
 date: 2021-04-23T11:53:27+02:00
 draft: true
 ---

@@ -1,6 +1,5 @@
 ---
 title: "Fractal Image Compression"
-author: "Octavi Font"
 cover: "/media/post/fractals/mandelbrot.jpg"
 tags: ["fractals", "tagB"]
 date: 2019-01-10T21:45:43+01:00
