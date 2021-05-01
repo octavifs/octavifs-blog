@@ -18,6 +18,51 @@ In this post I cover my approach to repeatable environments with GPU support and
 
 Python's package management story is a convoluted affair compared to Rust's [Cargo](https://doc.rust-lang.org/cargo/) or Javascript's [npm](https://www.npmjs.com/). The language was publicly released 30 years ago and the development landscape has changed much since then. There's never been more people using it, on all kinds of projects, at all sorts of scales. This doesn't come without drawbacks, however, and currently one of the roughest edges when developing in python revolves around package management and distribution.
 
+If you've worked on multiple python projects before, you will be pretty familiar with these setup requirements to get a working dev environment:
+
+- python interpreter with a compatible version (2 vs 3, but also pretty frequently a specific flavor of 3.x)
+- system wide libraries installed via apt (required to build a dependency or necessary for a dependency to run)
+- virtualenv installed with pip, containing the project's python dependencies
+
+If you are lucky enough that all your project dependencies come packaged as a wheel binary, you might not even need to install any system wide library to your dev machine. Everything can be done from `pip`. Also, if you want a better experience managing virtual environments and dependencies, there are alternative package manager projects such as [`pipenv`](https://pipenv.pypa.io/en/latest/) and [`poetry`](https://python-poetry.org/) that improve on the workflow and dependency resolution consistency over pip [^pip_dependency_resolution].
+
+[^pip_dependency_resolution]: Historically `pip` dependency resolver has been pretty limited and is known to let the user install mutually incompatible versions of a dependency. pip v20.3 onwards offers [improvements](https://pyfound.blogspot.com/2020/11/pip-20-3-new-resolver.html) on the resolver, although projects such as pipenv or poetry have much stricter consistency goals. The whole topic is worth another series of posts in itself.
+
+If you can't avoid installing non-python dependencies, the typical solution is to package your whole environment in a `Dockerfile` and work with that. This way, neither the system wide dependencies nor the virtualenvs are a problem, since both of them are contained within a Docker image. But, **if you need access to your GPU, by default, Docker will not let you**[^docker_gpu_support].
+
+[^docker_gpu_support]: It's possible to setup Docker and docker-compose with GPU support with [nvidia-container-runtime](https://github.com/NVIDIA/nvidia-container-runtime). I'll detail its usage in the following posts.
+
+## Conda to the rescue
+
+[`conda`](https://docs.conda.io/en/latest/) is a package manager typically used for Python, but not limited to it. This means you can use it, like `pip`, to manage all your python dependencies but, additionally, it will also manage those pesky system-wide dependencies you sometimes needed to preinstall which, in the world of deep learning, essentially means that we don't need to worry about which CUDA version we have installed into our system, since `conda` will manage this for us. Another positive aspect of this approach is that those non-python dependencies also get installed in an isolated environment. So it is perfectly possible to have multiple projects, locally, using conflicting packages and library versions. Even CUDA. Without the need to Dockerize anything.
+
+My recommended approach, if you're not tied to any other of the alternative package managers, is to setup my projects with `conda`, use the `conda` environment to develop locally and dockerize the project for deployment in production. The amount of setup is minimal, the environment is self-contained, and it's the easiest way to get your GPU running and test your experiments with. It's also really easy to package into a docker image and or to setup the same environment into environments where you might have limited restrictions. For example, I've executed training scripts on my University HPC with this `conda` setup without the need to limit myself to the installed versions of the software available on those machines.
+
+
+## Draft
+
+Mention the problems you typically find more in detail, and why dependencies should be pinned.
+
+- Libraries are still young and under heavy development. API may not be super stable and some times breaking changes are introduced between minor releases. If dependencies are not pinned, you may inadvertedly end up with broken environments across your team, or worse, in your production image!
+- Unfortunately, there are many dependencies on C libraries and external shit being installed. Also, CUDA toolkit and NVIDIA drivers can be a pain in the bum. And frameworks as Tensorflow or PyTorch tend to be pretty particular as to which versions you need installed. This can also be a problem if you have to switch between projects with different technologies pretty frequently, if you have to uninstall your CUDA libraries, maybe even drivers, to adapt them to a specific version. Or maybe you need to force an upgrade on some libraries, with the extra rework required, just so that you can run it alongside your new stack now, etc.
+
+PIP has gotten better, now it has wheels, with binaries built in, so you don't need to have a full dev environment to be able to build the libraries you need to install, which is nice. And there are other possibilities such as pipenv, poetry or conda. And I wonder if you do weird things. Ah, you don't at this zoom level. I wonder if this is actually the normal zoom level? And the other one is some zoomed-in bullshit that I am using? Now that I have reset the zoom level, will it work without me going mad? Because all of these break lines moving back and forth were really making me go a bit looney.
+
+Maybe I should divide into a multiple series of posts? Like, it makes sense to explain how to go from a simple notebook that you run randomly as an example from the pytorch or keras website, so something of a more repeatable environment.
+
+I know that there are environments such as collab notebooks and the like, where everything is in the cloud and basically the data scientists don't have to worry about anything at all infra wise. But if you still want to have control exactly about what you are doing, these techniques might be worth it.
+
+I think that it would make sense to give a bit of context on who might benefit best from setups such as this. I think they are very good to start out with. Especially if you are a smaller company, or research lab with bare metal hardware you want to use for your experiments.
+
+Probably if you are a cloud native company, with engineering resources and dedicated data scientists and ifra team, you'll benefit from staying cloud native, and enjoy the benefits of multi instance GPU training and all of that. But for now, let's stay for what you can do in more simple cases.
+
+This approach is still useful if you are playing with different technologies, projects and frameworks, since it needs to install the least amount of components on your bare metal hardware. I've used it successfully on workstations I've owned and also HPCs where I didn't have access to the setup or anything. It translates well into docker and it can even work well in a GPU-through docker situation.
+
+It will also let you scale to multigpu training in the same workstation without trouble as well. And if you work with smaller datasets, or your data is not in the cloud, you have a small operations budget, etc. It's a really good option to perform development work and still have a good path to deployment later on.
+
+
+All of this still doesn't sidestep the fact that, if your project 
+
 Talk about pip. pip allows you to install packages, resolves dependencies, and builds binaries, if you need to build something from source. Nowadays there are wheels as well, which is prepackaged binaries, which is very nice. Mostly because before wheels, you needed to have all the dev libraries installed to be able to build a python package, if it had any sort of C extensions or similar. And this, apart from the time it requires to do the build itself, it resulted in some hunting down instructions to add all of the dependencies manually, via apt-get or yum, or whatever your linux distro requires. And that is almost a best-case scenario, because if you were using Windows or OSX, you might be fucked.
 
 Then OK, you have your packages installed. But you might need to work with more than one python version. Or maybe you need different library versions in 2 different projects. Then what? This is why they created virtualenvs for. Now, this is almost a thing of the past, because instead of a virtualenv, what we do is create a docker image, build everything there and bam, isolated pip. And while this is amazing, if your environment requires the usage of special resources, such as GPUs, for the training of deep learning models, or whatever, you might actually need to go back to this virtualenv thingies.
@@ -55,26 +100,7 @@ A history of python packaging until 2009 (itself, history): [source](https://blo
 ## Specific problems in deep learning
 What about deep learning development is extra complicated? Why does the normal approach not work?
 
-## Conda to the rescue
 
-Mention the problems you typically find more in detail, and why dependencies should be pinned.
-
-- Libraries are still young and under heavy development. API may not be super stable and some times breaking changes are introduced between minor releases. If dependencies are not pinned, you may inadvertedly end up with broken environments across your team, or worse, in your production image!
-- Unfortunately, there are many dependencies on C libraries and external shit being installed. Also, CUDA toolkit and NVIDIA drivers can be a pain in the bum. And frameworks as Tensorflow or PyTorch tend to be pretty particular as to which versions you need installed. This can also be a problem if you have to switch between projects with different technologies pretty frequently, if you have to uninstall your CUDA libraries, maybe even drivers, to adapt them to a specific version. Or maybe you need to force an upgrade on some libraries, with the extra rework required, just so that you can run it alongside your new stack now, etc.
-
-PIP has gotten better, now it has wheels, with binaries built in, so you don't need to have a full dev environment to be able to build the libraries you need to install, which is nice. And there are other possibilities such as pipenv, poetry or conda. And I wonder if you do weird things. Ah, you don't at this zoom level. I wonder if this is actually the normal zoom level? And the other one is some zoomed-in bullshit that I am using? Now that I have reset the zoom level, will it work without me going mad? Because all of these break lines moving back and forth were really making me go a bit looney.
-
-Maybe I should divide into a multiple series of posts? Like, it makes sense to explain how to go from a simple notebook that you run randomly as an example from the pytorch or keras website, so something of a more repeatable environment.
-
-I know that there are environments such as collab notebooks and the like, where everything is in the cloud and basically the data scientists don't have to worry about anything at all infra wise. But if you still want to have control exactly about what you are doing, these techniques might be worth it.
-
-I think that it would make sense to give a bit of context on who might benefit best from setups such as this. I think they are very good to start out with. Especially if you are a smaller company, or research lab with bare metal hardware you want to use for your experiments.
-
-Probably if you are a cloud native company, with engineering resources and dedicated data scientists and ifra team, you'll benefit from staying cloud native, and enjoy the benefits of multi instance GPU training and all of that. But for now, let's stay for what you can do in more simple cases.
-
-This approach is still useful if you are playing with different technologies, projects and frameworks, since it needs to install the least amount of components on your bare metal hardware. I've used it successfully on workstations I've owned and also HPCs where I didn't have access to the setup or anything. It translates well into docker and it can even work well in a GPU-through docker situation.
-
-It will also let you scale to multigpu training in the same workstation without trouble as well. And if you work with smaller datasets, or your data is not in the cloud, you have a small operations budget, etc. It's a really good option to perform development work and still have a good path to deployment later on.
 
 ## Introduction
 Introduce the problem we are trying to solve. Essentially, early prototyping and training of models in jupyter notebooks can be hard to translate to production if you don't take good care of your virtual environments and dependency management. Additionally, if you are training deep learning models, you will have the extra annoyance of having to deal with nvidia drivers and the cuda toolkit, which is pretty finnicky and outside of the pip realm. To make things worse, you may be working with multiple models, built on different versions of PyTorch or Tensorflow, which may require different and incompatible versions of the cuda toolkit, etc.
