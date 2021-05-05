@@ -19,15 +19,15 @@ Python's package management story is a convoluted affair compared to Rust's [Car
 
 If you've worked on multiple python projects before, you will be pretty familiar with these setup requirements to get a working dev environment:
 
-- python interpreter with a compatible version (2 vs 3, but also pretty frequently a specific flavor of 3.x)
-- system wide libraries installed via apt (required to build a dependency or necessary for a dependency to run)
+- python interpreter with a compatible version (2 vs 3, but it's also pretty frequent to require a specific version of 3.x)
+- system wide libraries installed via apt (required to build / run a dependency)
 - virtualenv installed with pip, containing the project's python dependencies
 
-If you are lucky enough that all your project dependencies come packaged as a wheel binary, you might not even need to install any system wide library to your dev machine. Everything can be done from `pip`. Also, if you want a better experience managing virtual environments and dependencies, there are alternative package manager projects such as [`pipenv`](https://pipenv.pypa.io/en/latest/) and [`poetry`](https://python-poetry.org/) that improve on the workflow and dependency resolution consistency over pip [^pip_dependency_resolution].
+Out of the three points above, you might encounter more or less based on the specifics of your project. If you are lucky that all your dependencies come packaged as a wheel, you won't have to install any system wide library to your dev machine. Similarly, you might already be using an alternative package manager to pip, such as [`pipenv`](https://pipenv.pypa.io/en/latest/) or [`poetry`](https://python-poetry.org/), which integrate virtualenvs into the package manager, along with improved dependency resolution and a more streamlined workflow [^pip_dependency_resolution].
 
 [^pip_dependency_resolution]: Historically `pip` dependency resolver has been pretty limited and is known to let the user install mutually incompatible versions of a dependency. pip v20.3 onwards offers [improvements](https://pyfound.blogspot.com/2020/11/pip-20-3-new-resolver.html) on the resolver, although projects such as pipenv or poetry have much stricter consistency goals. The whole topic is worth another series of posts in itself.
 
-If you can't avoid installing non-python dependencies, the typical solution is to package your whole environment in a `Dockerfile` and work with that. This way, neither the system wide dependencies nor the virtualenvs are a problem, since both of them are contained within a Docker image. But, **if you need access to your GPU, by default, Docker will not let you**[^docker_gpu_support].
+For all the cases where you can't avoid installing non-python dependencies, which is surprisingly often in any non-trivial python project, the typical solution is to package your environment in a `Dockerfile` and work using containers directly. Setting up projects directly with docker ensures that system wide dependencies will not be missing and you can also avoid setting up a virtualenv. Still, **if you need access to your GPU, by default, Docker will not let you**[^docker_gpu_support].
 
 [^docker_gpu_support]: It's possible to setup Docker and docker-compose with GPU support with [nvidia-container-runtime](https://github.com/NVIDIA/nvidia-container-runtime). I'll detail its usage in the following posts.
 
