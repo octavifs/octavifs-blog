@@ -13,7 +13,7 @@ In this post I cover my approach to repeatable environments with GPU support and
 
 ![XKCD python environment madness](/media/post/deep-learning-in-production-part1/python_environment_xkcd.png "source: [https://xkcd.com/1987](https://xkcd.com/1987)")
 
-You can jump straight into [the recipe](#the-recipe), if you are already familiar with the problem and just need a working solution.
+You can jump straight into [the recipe](#the-recipe), if you are already familiar with the problem and just need a working solution. You can also clone the recipe [from its GitHub repo](https://github.com/octavifs/dl-in-prod-environments/tree/main/part1).
 
 ## Python package management
 
@@ -37,103 +37,189 @@ For all the cases where you can't avoid installing non-python dependencies, whic
 
 [`conda`](https://docs.conda.io/en/latest/) is a package manager typically used for Python, but not limited to it. This means you can use it, like `pip`, to manage all your python dependencies but, additionally, it will also manage those pesky system-wide dependencies you sometimes needed to preinstall which, in the world of deep learning, essentially means that we don't need to worry about which CUDA version we have installed into our system, since `conda` will manage this for us. Another positive aspect of this approach is that **non-python dependencies also get installed in an isolated environment**. So it is perfectly possible to have multiple projects, locally, using conflicting packages and library versions. Even CUDA. Without the need to Dockerize anything.
 
-My recommended approach, if you're not tied to any other of the alternative package managers, is to setup projects with `conda`, use the `conda` environment to develop locally and dockerize the project for deployment in production. The amount of setup is minimal, the environment is self-contained, and it's the easiest way to get your GPU running and test your experiments with. It's also really easy to package into a docker image and or to setup the same environment into **environments with limited permissions**. For example, I've executed training scripts on my University HPC with this `conda` setup without the need to limit myself to the installed versions of its software.
+My recommended approach, if you're not tied to any other of the alternative package managers, is to setup projects with `conda`, use the `conda` environment to develop locally and dockerize the project for deployment in production. The amount of setup is minimal, the environment is self-contained, and it's the easiest way to get your GPU running and test your experiments with. It's also really easy to package into a docker image or to setup in **environments with limited permissions**. For example, I've executed training scripts on my University HPC with this `conda` setup without the need to limit myself to the installed versions of its software.
 
 
 ## The Recipe
 
 ### 1. Install nvidia graphic drivers
-This is the only step for which you will need root permissions to your system.
+This is the only step for which you will need root permissions to your system. For this recipe I am using Ubuntu 20.04 LTS. The steps should be the same for any supported Ubuntu image. If you are using any other Linux distribution, Google is your friend. Should be pretty easy regardless.
 
+First, we make sure that the ubuntu-drivers utility is installed in our system:
+
+    $ sudo apt update && sudo apt install -y ubuntu-drivers-common
+
+We check that the utility detects our GPU correctly:
+
+    $ sudo ubuntu-drivers devices
+    == /sys/devices/pci0000:00/0000:00:04.0 ==
+    modalias : pci:v000010DEd0000102Dsv000010DEsd0000106Cbc03sc02i00
+    vendor   : NVIDIA Corporation
+    model    : GK210GL [Tesla K80]
+    driver   : nvidia-driver-450-server - distro non-free
+    driver   : nvidia-driver-418-server - distro non-free
+    driver   : nvidia-driver-450 - distro non-free
+    driver   : nvidia-driver-460-server - distro non-free
+    driver   : nvidia-driver-460 - distro non-free recommended
+    driver   : nvidia-driver-390 - distro non-free
+    driver   : xserver-xorg-video-nouveau - distro free builtin
+
+And proceed to install the drivers:
+
+    $ sudo ubuntu-drivers autoinstall
+
+This command will automatically choose the version, but you can also run `$sudo apt install nvidia-driver-<version>` with any of the drivers listed by `ubuntu-drivers`, if you have some specific requirements. After that, reboot your machine for the changes to take effect. Once that's done, run `nvidia-smi` to check that your GPU appears properly listed:
+
+    $ nvidia-smi
+    Fri May  7 10:28:05 2021       
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 460.73.01    Driver Version: 460.73.01    CUDA Version: 11.2     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                               |                      |               MIG M. |
+    |===============================+======================+======================|
+    |   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |
+    | N/A   71C    P8    36W / 149W |     13MiB / 11441MiB |      0%      Default |
+    |                               |                      |                  N/A |
+    +-------------------------------+----------------------+----------------------+
+                                                                                
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                                  |
+    |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+    |        ID   ID                                                   Usage      |
+    |=============================================================================|
+    |    0   N/A  N/A       928      G   /usr/lib/xorg/Xorg                  8MiB |
+    |    0   N/A  N/A       976      G   /usr/bin/gnome-shell                3MiB |
+    +-----------------------------------------------------------------------------+
+
+And that's all! Onto `conda` next.
 ### 2. Install miniconda
+[`miniconda`](https://docs.conda.io/en/latest/miniconda.html) is a minimal distribution of `conda`, with everything you need to get started without any of the bloat. To install miniconda locally run:
 
+    $ curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o miniconda.sh \
+        && bash miniconda.sh -b \
+        && rm miniconda.sh
+
+This will download and install everything you need on the local folder `$HOME/miniconda3`. To finish your setup, run `conda init` with your shell of choice. `bash` in this case:
+
+    $ $HOME/miniconda3/bin/conda init bash
+
+This will modify your `PATH` so you will have the `conda` command available and also allow you to activate and deactivate environments easily. Make sure you open a new shell for the changes to take effect.
 
 ### 3. Manage your conda environment
 
+Now that we have everything setup, let's create a new environment for our deep learning project. When we create an environment we can also specify which python version we want to use. python 3.8 in this case:
+
+    (base): $ conda create -y -n new-dl-project python=3.8
+
+If we activate the environment, any of the subsequent installs or scripts will be executed against it, without affecting the global environment:
+
+    (base): $ conda activate new-dl-project
+    (new-dl-project): $ which python
+    /home/octavi/miniconda3/envs/new-dl-project/bin/python
+    (new-dl-project): $ python --version
+    Python 3.8.8
+
+To [install pytorch](https://pytorch.org/get-started/locally/) we will run:
+
+    (new-dl-project): $ conda install -y pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+
+If we take a closer look at the command, we can see how conda manages the installation of the necessary cuda toolkit libraries in the environment itself (we could be running something else in our system). We are also specifying an alternative [installation channel](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html), as per the pytorch docs. When using conda, if you don't find the package you are finding in the default channel, you can try [searching it](https://anaconda.org/anaconda/repo) in channels managed by other maintainers. If that also fails, you can default to pip. It will still install those packages on the project environment.
+
+Once the installation finishes, we can finally test running pytorch and checking for CUDA support:
+
+    (new-dl-project): $ python -c 'import torch; print(f"{torch.cuda.is_available()=}")'
+    torch.cuda.is_available()=True
+
+Finally, we should export the environment definition to allow other teammates (and ourselves) to replicate it in the future. To do this, `conda` offers multiple options. If we want to get a carbon copy of every installed dependency, plus build version, we can run:
+
+    $ conda env export
+
+This list is convenient to ensure a 100% reproducible build, but it is not cross compatible. Many of the builds are platform dependent and if that is the only thing you commit to your repo you might find it impossible to install the same dependencies on another PC.
+
+A less strict option is to list all installed packages with version, without build. This is very similar to running `pip freeze` and I would already recommend to add that to your repo, as follows:
+
+    (new-dl-project): $ cd <some-path>/new-dl-project
+    (new-dl-project): $ conda env export --no-build > environment.yml.lock
+
+As with `pip freeze` this lists all installed packages in the environment, whether they are direct or indirect dependencies of the project. Which is not ideal from a maintenance point of view and makes library updates harder to perform.
+
+My personal recommendation is to save an `environment.yml` with just the installs we have explicitly performed:
+
+    (new-dl-project): $ cd <some-path>/new-dl-project
+    (new-dl-project): $ conda env export --from-history > environment.yml
+
+This generates a YAML file, `environment.yml` with only the dependencies from the `conda install` command:
+
+    (new-dl-project): $ cat environment.yml
+    name: new-dl-project
+    channels:
+    - default
+    dependencies:
+    - python=3.8
+    - torchaudio
+    - pytorch
+    - cudatoolkit=10.2
+    - torchvision
+    prefix: /home/octavi/miniconda3/envs/new-dl-project
+
+**This version of the command does NOT specify the library version** unless we have explicitly set it while installing the package. Since this is not ideal either, what I do, is to **edit this file manualy with the version numbers** of `environment.yml.lock` that I've created beforehand. It is also **very important that you add any missing channel** that may appear in `environment.yml.lock`. Additionally, I remove the **prefix** line, since it is optional and will depend on the local config. Less spurious changes to be commited to the repo this way:
+
+{{< gist octavifs 2f95253a274403641d2b2586845adf23 "environment.yml" >}}
+
+To finish this conda tutorial, let's try destroying the environment we have just created and recreating it from the `environment.yml` file we have prepared:
+
+    # Destroy the environment
+    (new-dl-project): $ conda deactivate
+    (base): $ conda env remove -n new-dl-project
+    
+    # Check that the environment no longer exists
+    (base) octavi@instance-1:~/new-dl-project$ conda env list
+    # conda environments:
+    #
+    base                  *  /home/octavi/miniconda3
+    
+    # Recreate it from environment.yml
+    (base): $ conda env create -f environment.yml
+    
+    # Check that pytorch runs
+    (base): $ conda activate new-dl-project
+    (new-dl-project): $ python -c 'import torch; print(f"{torch.cuda.is_available()=}")'
+    torch.cuda.is_available()=True
+
+Add `environment.yml` and `environment.yml.lock` to your git repo and you should be ready to go. Just remember to update both files whenever you add or update a new dependency via `conda install`, `conda update` or similar. Also remember to add the version numbers and channels to your `environment.yml`.
+
 ### 4. Dockerize project
-Here we link to 
+So far, we have setup reproducible development environments that allow us to run our project on bare metal, without the need of superuser permissions nor the necessity to perform any global installs. Everything is self-contained.
+
+Still, even though this setup is very convenient to develop in, it may not be appropriate to deploy our project to production. This part of the recipe will cover **how to package our conda environment inside a docker image**.
+
+First, we will create a basic `Dockerfile` in our project's folder:
+
+{{< gist octavifs 2f95253a274403641d2b2586845adf23 "Dockerfile" >}}
+
+For demo purposes, we will also create a very basic `docker-compose.yml` configuration:
+
+{{< gist octavifs 2f95253a274403641d2b2586845adf23 "docker-compose.yml" >}}
+
+You can build that with the typical `docker-compose build`, and run the service with `docker-compose up`. It should return something like this:
+
+    (base): $ docker-compose up
+    Recreating new-dl-project_example_1 ... done
+    Attaching to new-dl-project_example_1
+    example_1  | torch.cuda.is_available()=False
+    new-dl-project_example_1 exited with code 0
+
+If you've noticed, running our example through docker results in **CUDA not being available**. This is because, by default, docker does not expose resources such as GPUs to the container, so they can't be used while running from a container. Still, since in production we are only evaluating the models, not training them, doing so on CPU tends to be reasonable.
+
+In the `Dockerfile` I've separated the section per blocks. Essentially putting together all the steps of this recipe. I've also added a few commands to ensure that packages will be purged and not stored in the docker image, to save some space. If we wanted a more elaborate setup, with the possibility to be used via devcontainers or similar in VSCode, I would setup a non-root user with a configurable UID. This way it would be possible to mount the project as a volume and run it through the container with the same permissions as our local user. Regardless, this basic setup should be most of what you need to dockerize any similar conda environment.
+
 ## Summary
-This is a summary of the main points and also some notes to actually point out the things that might be missing and the problems that we are not tackling with this.
+I've collected this recipe on its own [GitHub repo](https://github.com/octavifs/dl-in-prod-environments/tree/main/part1) to make it easier to share and modify.
 
+In this post we've seen some of the reasons why python packaging is difficult, especially when our projects have non-python dependencies. This is the case of deep learning projects, that depend on the CUDA toolkit to train new models.
 
-## Draft
+I've presented an approach to managing python environments with `conda` that allow any user to install a fully working environment in isolation without the need of any extra user permissions. This approach works well to develop locally and it is easy to dockerize for deployment in production. I've also detailed my particular approach at keeping track of dependencies on `environment.yml`, to facilitate reproducible environments which are easy to upgrade and compatible with multiple environments.
 
-Mention the problems you typically find more in detail, and why dependencies should be pinned.
-
-- Libraries are still young and under heavy development. API may not be super stable and some times breaking changes are introduced between minor releases. If dependencies are not pinned, you may inadvertedly end up with broken environments across your team, or worse, in your production image!
-- Unfortunately, there are many dependencies on C libraries and external shit being installed. Also, CUDA toolkit and NVIDIA drivers can be a pain in the bum. And frameworks as Tensorflow or PyTorch tend to be pretty particular as to which versions you need installed. This can also be a problem if you have to switch between projects with different technologies pretty frequently, if you have to uninstall your CUDA libraries, maybe even drivers, to adapt them to a specific version. Or maybe you need to force an upgrade on some libraries, with the extra rework required, just so that you can run it alongside your new stack now, etc.
-
-PIP has gotten better, now it has wheels, with binaries built in, so you don't need to have a full dev environment to be able to build the libraries you need to install, which is nice. And there are other possibilities such as pipenv, poetry or conda. And I wonder if you do weird things. Ah, you don't at this zoom level. I wonder if this is actually the normal zoom level? And the other one is some zoomed-in bullshit that I am using? Now that I have reset the zoom level, will it work without me going mad? Because all of these break lines moving back and forth were really making me go a bit looney.
-
-Maybe I should divide into a multiple series of posts? Like, it makes sense to explain how to go from a simple notebook that you run randomly as an example from the pytorch or keras website, so something of a more repeatable environment.
-
-I know that there are environments such as collab notebooks and the like, where everything is in the cloud and basically the data scientists don't have to worry about anything at all infra wise. But if you still want to have control exactly about what you are doing, these techniques might be worth it.
-
-I think that it would make sense to give a bit of context on who might benefit best from setups such as this. I think they are very good to start out with. Especially if you are a smaller company, or research lab with bare metal hardware you want to use for your experiments.
-
-Probably if you are a cloud native company, with engineering resources and dedicated data scientists and ifra team, you'll benefit from staying cloud native, and enjoy the benefits of multi instance GPU training and all of that. But for now, let's stay for what you can do in more simple cases.
-
-This approach is still useful if you are playing with different technologies, projects and frameworks, since it needs to install the least amount of components on your bare metal hardware. I've used it successfully on workstations I've owned and also HPCs where I didn't have access to the setup or anything. It translates well into docker and it can even work well in a GPU-through docker situation.
-
-It will also let you scale to multigpu training in the same workstation without trouble as well. And if you work with smaller datasets, or your data is not in the cloud, you have a small operations budget, etc. It's a really good option to perform development work and still have a good path to deployment later on.
-
-
-All of this still doesn't sidestep the fact that, if your project 
-
-Talk about pip. pip allows you to install packages, resolves dependencies, and builds binaries, if you need to build something from source. Nowadays there are wheels as well, which is prepackaged binaries, which is very nice. Mostly because before wheels, you needed to have all the dev libraries installed to be able to build a python package, if it had any sort of C extensions or similar. And this, apart from the time it requires to do the build itself, it resulted in some hunting down instructions to add all of the dependencies manually, via apt-get or yum, or whatever your linux distro requires. And that is almost a best-case scenario, because if you were using Windows or OSX, you might be fucked.
-
-Then OK, you have your packages installed. But you might need to work with more than one python version. Or maybe you need different library versions in 2 different projects. Then what? This is why they created virtualenvs for. Now, this is almost a thing of the past, because instead of a virtualenv, what we do is create a docker image, build everything there and bam, isolated pip. And while this is amazing, if your environment requires the usage of special resources, such as GPUs, for the training of deep learning models, or whatever, you might actually need to go back to this virtualenv thingies.
-
-Now, virtualenv is OK, but not the latest thing. You can use pipenv, or poetry, which are newer generation package managers, that integrate virtualenvs, and also have lockfiles, and more strict dependency trackers. Even pip itself is actually improving in terms of package resolution, and avoiding conflicst on the python dependency graph. But it is just not great.
-
-Another problem with all of this crap is that OK, even if you do all of this,
-
-
-If you've used python to write more than a simple few scripts you are probably already familiar with `pip` and `virtualenv`. When you need to work on multiple projects, the ability to create isolated python environments in your development machine is a must. This allows you to work with different python versions simultaneously, conflicting package versions
-You might have to work with different python versions simultaneously, conflicting package versions or j
-
-, especially if you had the need to deal with multiple projects and codebases, 
-
-
-The language is used by more people than ever before, for more purposes than ever, on much larger scales.
-
-Most of you will be familiar with the `pip` package manager and the usage of `virtualenv` to create isolated python environments.
-
-Python package management story is a much more convoluted affair than Rust's Cargo or Javascript's npm. The language was publically released more than 30 years ago and 
-Python's first public release was 30 years ago already, and much has changed since the early 90's. The language has grown a lot, in features and usages, from its early 1.x days.
-
-Python's first public release was 30 years ago, and much has changed since that. Both in the language and
-Python is a pretty senior programming language, first published to the public 30 years ago already. And the times have changed. The language has greatly evolved, going from a convenient language to write some quick scripts in, to something used by millions to develop large codebases in, with very complex toolchains and business built around it.
-
-Essentially, the language has grown a lot, python is something else for every developer, and package management can be pretty messy.
-
-I'm pretty sure you are already familiar with the concept of virtualenvs and pip. One to create separate python environments, with specific python versions, if needed. And the other to install python packages.
-
-There are other strategies, such as the classic `setup.py` and `disttools` to build packages. Then also `easy_install`, which I think is deprecated already?
-Explain here a bit around pip, virtualenvs, docker, conda, etc.
-
-A history of python packaging until 2009 (itself, history): [source](https://blog.startifact.com/posts/older/a-history-of-python-packaging.html)
-
-## Specific problems in deep learning
-What about deep learning development is extra complicated? Why does the normal approach not work?
-
-
-
-## Introduction
-Introduce the problem we are trying to solve. Essentially, early prototyping and training of models in jupyter notebooks can be hard to translate to production if you don't take good care of your virtual environments and dependency management. Additionally, if you are training deep learning models, you will have the extra annoyance of having to deal with nvidia drivers and the cuda toolkit, which is pretty finnicky and outside of the pip realm. To make things worse, you may be working with multiple models, built on different versions of PyTorch or Tensorflow, which may require different and incompatible versions of the cuda toolkit, etc.
-
-This is a 2 series post on how to make this process a bit more bearable and how to package it for production.
-
-Maybe I could do like a 2 part series.
-
-- conda vs pip. Why it is interesting when dealing with deep learning (especially it frees you of libcuda problems)
-- dockerize the conda environment. How to create base images that contain everything and reuse them for multiple services in your docker-compose.yml
-- Add the weights to the docker image itself. This way you can ship this to production as a single package. You don't even need to download them on startup. It's a single binary, containing weights and code. Not the most efficient in terms of space, that is true, with the extra dependencies added, but still serviceable.
-- Additionally, I think it is worth mentioning that this technique has the benefit of being able to use the GPUs through docker, if you configure it properly. Since the image has all the libraries installed, if you route the GPU, you can actually use it, even in the cloud. That is pretty cool, if you want to accelerate the inference step of your code.
-
-Honestly, the first part is mostly about dependency management and why conda is a bit better, at least for things like deep learning. Like, sure, you could use docker also for development, but GPU passthrough setup is a bit more of a pain, and you need to be smarter to setup properly the scripts. And sometimes you just don't want to have to deal with volumes and the like, so if you can avoid it without much cost, all the better.
-
-The second part is how we encapsulate this conda environment and actually ship it to production. Since we have already done most of the work, pretty much the only thing left is for us to package the thing and add the weights. With the additional benefit that libraries do work with CPU by default and, if we configure it properly, it is also possible to execute the same image with GPU support for an added bonus.
-
-A thing that is nice about conda, is that you can even execute it in environments where you don't have a lot of permissions. In the case of docker, you need a user with docker privileges, which you might not have. For conda, you should be able to setup everything locally, even with a user without any permissions. This can be useful if you are using the HPC of your university lab. You can setup everything locally, including cuda toolkit driver versions, and just run the code with everything local. As long as the GPU driver is compatible, you are good to go, and the possibilities this is the case are much larger than otherwise. Pretty good alternative if you need to run your experiments there.
-
+In future parts of this series I'll detail how we can configure docker to run GPU tasks, as well as ways to configure environments with package managers other than conda. The following posts will be handy for those of you that need to dockerize legacy projects or have hard constraints on your package manager of choice.
