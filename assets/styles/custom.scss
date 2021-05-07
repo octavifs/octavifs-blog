@@ -49,3 +49,9 @@ body {
 .post-content figure img, .post-content img {
     box-shadow: unset !important;
 }
+
+.post-content pre {
+    margin: unset !important;
+    background-color: #f6f8fa;
+    border: 1px solid #4a4a4a;
+}
