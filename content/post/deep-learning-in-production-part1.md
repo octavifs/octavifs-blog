@@ -13,6 +13,8 @@ In this post I cover my approach to repeatable environments with GPU support and
 
 ![XKCD python environment madness](/media/post/deep-learning-in-production-part1/python_environment_xkcd.png "source: [https://xkcd.com/1987](https://xkcd.com/1987)")
 
+You can jump straight into [the recipe](#the-recipe), if you are already familiar with the problem and just need a working solution.
+
 ## Python package management
 
 Python's package management story is a convoluted affair compared to Rust's [Cargo](https://doc.rust-lang.org/cargo/) or Javascript's [npm](https://www.npmjs.com/). The language was publicly released 30 years ago and the development landscape has changed much since then. There's never been more people using it, on all kinds of projects, at all sorts of scales. This doesn't come without drawbacks, however, and currently one of the roughest edges when developing in python revolves around package management and distribution.
@@ -33,9 +35,25 @@ For all the cases where you can't avoid installing non-python dependencies, whic
 
 ## Conda to the rescue
 
-[`conda`](https://docs.conda.io/en/latest/) is a package manager typically used for Python, but not limited to it. This means you can use it, like `pip`, to manage all your python dependencies but, additionally, it will also manage those pesky system-wide dependencies you sometimes needed to preinstall which, in the world of deep learning, essentially means that we don't need to worry about which CUDA version we have installed into our system, since `conda` will manage this for us. Another positive aspect of this approach is that those non-python dependencies also get installed in an isolated environment. So it is perfectly possible to have multiple projects, locally, using conflicting packages and library versions. Even CUDA. Without the need to Dockerize anything.
+[`conda`](https://docs.conda.io/en/latest/) is a package manager typically used for Python, but not limited to it. This means you can use it, like `pip`, to manage all your python dependencies but, additionally, it will also manage those pesky system-wide dependencies you sometimes needed to preinstall which, in the world of deep learning, essentially means that we don't need to worry about which CUDA version we have installed into our system, since `conda` will manage this for us. Another positive aspect of this approach is that **non-python dependencies also get installed in an isolated environment**. So it is perfectly possible to have multiple projects, locally, using conflicting packages and library versions. Even CUDA. Without the need to Dockerize anything.
 
-My recommended approach, if you're not tied to any other of the alternative package managers, is to setup my projects with `conda`, use the `conda` environment to develop locally and dockerize the project for deployment in production. The amount of setup is minimal, the environment is self-contained, and it's the easiest way to get your GPU running and test your experiments with. It's also really easy to package into a docker image and or to setup the same environment into environments where you might have limited restrictions. For example, I've executed training scripts on my University HPC with this `conda` setup without the need to limit myself to the installed versions of the software available on those machines.
+My recommended approach, if you're not tied to any other of the alternative package managers, is to setup projects with `conda`, use the `conda` environment to develop locally and dockerize the project for deployment in production. The amount of setup is minimal, the environment is self-contained, and it's the easiest way to get your GPU running and test your experiments with. It's also really easy to package into a docker image and or to setup the same environment into **environments with limited permissions**. For example, I've executed training scripts on my University HPC with this `conda` setup without the need to limit myself to the installed versions of its software.
+
+
+## The Recipe
+
+### 1. Install nvidia graphic drivers
+This is the only step for which you will need root permissions to your system.
+
+### 2. Install miniconda
+
+
+### 3. Manage your conda environment
+
+### 4. Dockerize project
+Here we link to 
+## Summary
+This is a summary of the main points and also some notes to actually point out the things that might be missing and the problems that we are not tackling with this.
 
 
 ## Draft
