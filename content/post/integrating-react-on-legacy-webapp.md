@@ -1,6 +1,5 @@
 ---
 title: "Integrating React with a legacy webapp stack"
-author: "Octavi Font"
 cover: "/media/post/integrating-react-on-legacy-webapp/react_icon.png"
 tags: ["frontend", "legacy", "react"]
 date: 2019-01-10T21:37:14+01:00
