@@ -40,7 +40,7 @@ name = "Octavi Font"
     location = "Seattle, WA, USA"
     title = "Software Engineer"
     year = "09/2014 - 12/2015"
-    description = "Un rol de la parra. Lo millor de l'univers, amb molta diferència."
+    description = "Something really really cool. Somehow."
     projects = [
       """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          Suspendisse elit quam""",
