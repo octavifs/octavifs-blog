@@ -11,7 +11,7 @@ In this post I cover my approach to repeatable environments with GPU support and
 
 <!--more-->
 
-![XKCD python environment madness](/media/post/deep-learning-in-production-part1/python_environment_xkcd.png "source: [https://xkcd.com/1987](https://xkcd.com/1987)")
+![XKCD python environment madness](/media/post/deep-learning-in-production-part1/python_environment_xkcd.png "source: https://xkcd.com/1987")
 
 You can jump straight into [the recipe](#the-recipe), if you are already familiar with the problem and just need a working solution. You can also clone the recipe [from its GitHub repo](https://github.com/octavifs/dl-in-prod-environments/tree/main/part1).
 
