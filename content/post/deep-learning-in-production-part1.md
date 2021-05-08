@@ -1,6 +1,6 @@
 ---
 title: "Deep Learning in Production Part 1: Reproducible Environments"
-date: 2021-05-09T10:05:17+01:00
+date: 2021-05-08T10:05:17+01:00
 cover: "/media/post/deep-learning-in-production-part1/conda-logo.png"
 draft: false
 ---
