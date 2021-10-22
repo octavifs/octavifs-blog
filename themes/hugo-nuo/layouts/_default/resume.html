@@ -36,10 +36,10 @@
     {{ range $.Site.Data.resume.experience.list }}
       <div class="meta">
         <div class="upper-row">
-          <h4 class="job-title">{{ .title }}, {{ .name }}</h4>
+          <h4 class="job-title">{{ .title }} - {{ .company }}</h4>
           <div class="year">{{ .year }}</div>
         </div>
-        <div class="company">{{ .company }}, {{ .location }}</div>
+        <div class="company">{{ .location }}</div>
       </div>
       <div class="details">
       {{ if (isset . "description") }}

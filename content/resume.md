@@ -1,7 +1,8 @@
 ---
 title: "Resume"
-date: 2017-12-01
+date: 2021-10-21
 layout: "resume"
+menu: 'main'
 weight: 60
 comments: false
 ---

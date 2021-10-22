@@ -25,72 +25,92 @@ name = "Octavi Font"
 [experience]
 
   [[experience.list]]
-    name = "Google Cloud"
-    company = "Google, Inc."
-    location = "Mountain View, CA, USA"
-    title = "Software Engineer"
-    year = "01/2016 - now"
-    description = """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Suspendisse elit quam, maximus eget ex eget, vehicula ultricies nunc.
-      Nam sodales eu ipsum non ultricies."""
-
-  [[experience.list]]
-    name = "Amazon Web Services"
-    company = "Amazon"
-    location = "Seattle, WA, USA"
-    title = "Software Engineer"
-    year = "09/2014 - 12/2015"
-    description = "Something really really cool. Somehow."
+    # name = "OCCam"
+    company = "Big Blue Analytics"
+    location = "Barcelona (Remote)"
+    title = "Senior Data Engineer"
+    year = "03/2020 - now"
+    description = """Lead implementation of a data ingestion pipeline on a SaaS targeting real-time operational disruptions for airlines. Worked with the data science team to increase robustness and speed of the MVP into a scalable product."""
     projects = [
-      """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-         Suspendisse elit quam""",
-      """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-         Suspendisse elit quam""",
-      """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-         Suspendisse elit quam""",
+      """Implemented ETL to synchronize our real-time clients operations (including major EU airlines) with the SaaS backend (median of +1K changes/minute).""",
+      """Added instrumentation and monitoring to ETL to track failures and performance on AWS Cloudwatch, with dashboards and automated alerts.""",
+      """Migrated storage backend of the SaaS from S3 to a relational schema in PostgreSQL using Go.""",
+      """Rearchitected time-travel functionality (possibility to check airline operations at specific points in time) from document store to SQL with system-versioned tables. This decreased daily storage needs by x100.""",
+      """Created message processing system on AWS with SES + SNS + SQS. This service ingests aircraft status updates, with peaks of 180 updates per minute.""",
+      """Decreased fetch time of airline operations data by x2. Decreased time to First Meaningful Paint of the SaaS by another x2. Gains obtained due to profiling and elimination of bottlenecks, parallelization, caching and improved database indexing.""",
+      """Decreased time to first response for the disruption solver by x3,6 on average. Apart from the improved user experience, this has unlocked an initiative to reduce AWS billing by 30%.""",
     ]
 
   [[experience.list]]
-    name = "Aliyun"
-    company = "Alibaba, Inc."
-    location = "Hangzhou, Zhejiang, China"
-    title = "Software Engineer"
-    year = "01/2009 - 08/2014"
+    company = "Optretina"
+    location = "Barcelona (Remote)"
+    title = "Machine Learning Engineer"
+    year = "11/2018 - 12/2020"
+    description = """Lead implementation of a Deep Learning API  for Ophthalmology disease detection. Partnered with the Spanish leader in telemedicine for ophthalmology and the Catalan public healthcare system (ICS) to create a new AI-based product that detects signs of the most-common eye pathologies in retinal images."""
     projects = [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      """Trained deep learning models (Tensorflow / Keras) for image recognition on diabetic retinopathy, age macular degeneration, glaucoma, nevus and retina abnormalities, competitive with the state of the art. Validated results against external datasets under real-world conditions. This involved image processing, tuning datasets, choosing and tweaking network architectures.""",
+      """Communicated results to stakeholders. Wrote reports depicting improvements, strengths and weaknesses. These reports are the basis for the EU regulatory process as medical device software.""",
+      """Created flask API to serve the models. The API pre-applied validations and transformations to ensure predictions were only performed on relevant inputs. Built a CI / CD pipeline and deployment infrastructure alongside the API, which could be consumed as an internal or external service.""",
+      """Prepared API to scale both horizontally and vertically. Easy to process 1.3M images/day on a desktop CPU. Executed batch prediction tasks on the whole dataset on each model update.""",
+      """Set design process for new models. From idea to proof of concept. Responsible for researching SoA, gathering data, defining success metrics and preparing PoC to validate or discard ideas.""",
+      """Prepared and cleaned datasets. Set labeling tasks performed by expert ophthalmologists on Optretina’s data. Evaluated labeler consistency, prepared dataset ground truth and extended the process in case of large imbalances.""",
+      """Implemented traceability and backup strategy for models and data for future reproducibility.""",
+    ]
+
+  [[experience.list]]
+    company = "Everis & Universitat Pompeu Fabra"
+    location = "Barcelona (Remote)"
+    title = "Machine Learning Engineer"
+    year = "06/2018 - 10/2018"
+    description = """Developed the signal processing and data training parts of the UBIMIND project: a brain computer interface (BCI) prototype aimed at enabling ALS patients control over their wheelchair."""
+    projects = [
+      """Gathering of requirements with the client (Everis) and literature research. The BCI should be performed via consumer-grade EEG headset, require little training, be responsive and resistant to noise. Mental imagery and steady-state visually evoked potentials (SSVEP) were the techniques decided upon.""",
+      """Designed and implemented a wizard-like UI in Electron and React to automate the data acquisition. The app connected to the EEG headset, obtained its readings and generated files for training models.""",
+      """Implemented SSVEP signal processing code and ML classifier in python and scikit-learn. Analysis and fine-tuning of the SSVEP detector.""",
+      """Implemented prediction engine based on trained models, capable of working online and offline. The predictions, based on EEG signals, could be fed as inputs to a wheelchair or videogame to move around.""",
+    ]
+  
+  [[experience.list]]
+    company = "LCH"
+    location = "London"
+    title = "Software Developer"
+    year = "10/2015 - 07/2017"
+    description = """Backend developer of the member-facing collateral management system of LCH."""
+    projects = [
+      """Migrated app to SpringMVC and Java 8. Among other things, that allowed us to leverage Spring’s support for integration tests instead of the prior, much slower, acceptance test suite.""",
+      """Spearheaded integration and rollout of company-wide permissions and auth system in replacement of legacy solution.""",
+      """Setup CI and CD pipeline. Replaced proprietary deployment system (Bladelogic) with Ansible.""",
     ]
 
 [education]
 
   [[education.list]]
-    degree = "M.Sc. Computer Science"
-    school = "University of Universe"
-    year = "2006 - 2008"
-    description = "Thesis: Automatic Peeling Bananas."
+    degree = "M.S. in Computational Biomedical Engineering"
+    school = "Universitat Pompeu Fabra"
+    year = "2017"
+    description = "Developed lucanode, a CAD for lung cancer nodule detection using deep learning and CT scans."
 
   [[education.list]]
-    degree = "B.S. Computer Science"
-    school = "University of Universe"
-    year = "2002 - 2006"
-    description = "Courses: Algorithms, Computer Architecture."
+    degree = "B.S. in Computer Science and Telecommunications Engineering"
+    school = "Universitat Pompeu Fabra"
+    year = "2014"
+    description = "Special graduation award, granted as the 1st student of the Telecommunications promotion."
 
-
-[skill]
-
-  [[skill.list]]
-    section = "Programming languages"
-    items = ["Python", "Go", "Javascript"]
-  
-  [[skill.list]]
-    section = "Databases"
-    items = ["PostgreSQL", "Microsoft SQL Server", "Redis"]
-
-  [[skill.list]]
-    section = "Libraries and frameworks"
-    items = ["Git", "VSCode", "Pycharm"]
-
-  [[skill.list]]
-    section = "Services and Tools"
-    items = ["AWS", "Ansible", "Git", "VSCode", "Pycharm"]
+# I'm commenting out the skills section.
+# [skill]
+# 
+#   [[skill.list]]
+#     section = "Programming languages"
+#     items = ["Python", "Go", "Java", "Javascript", "SQL",]
+#   
+#   [[skill.list]]
+#     section = "Databases"
+#     items = ["PostgreSQL", "Microsoft SQL Server", "Redis"]
+# 
+#   [[skill.list]]
+#     section = "Libraries and frameworks"
+#     items = ["Tensorflow", "Keras", "Pandas"]
+# 
+#   [[skill.list]]
+#     section = "Services and Tools"
+#     items = ["AWS", "Ansible", "Git", "VSCode", "Pycharm"]
