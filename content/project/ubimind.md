@@ -11,6 +11,8 @@ UBIMIND is R&D demo funded by Everis in partnership with Universitat Pompeu Fabr
 
 {{< youtube "f08avWK_0vU" >}}
 
+---
+
 I worked as part of University's Pompeu Fabra Medtech group in assisting Everis with the data acquisition and signal processing aspects of the project.
 
 The project was developed on top of the [Emotiv EEG headset](https://www.emotiv.com/epoc-x/) platform, which provides a user-friendly EEG headset for research and personal purposes.
