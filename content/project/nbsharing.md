@@ -7,6 +7,8 @@ draft: false
 
 ## Share your data science reports
 
-Developed a pastebin for jupyter notebooks. Very useful to share reports with your clients and colleagues in a private manner. Just drag & drop your notebook and you will get a link you can share.
+[NBSharing](http://nbsharing.com/) is a simple pastebin for jupyter notebooks. Share reports with your clients and colleagues with ease. Just drag & drop your notebook and you will get a link you can share.
 
-It's free to use. [Enjoy](http://nbsharing.com/).
+I developed this as a personal project of mine to have a simple way to share notebooks as reports to clients with minimal friction.
+
+[![nbsharing screenshot](/media/project/nbsharing/nbsharing_screenshot.png)](http://nbsharing.com/)
