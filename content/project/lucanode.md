@@ -7,6 +7,10 @@ draft: false
 
 ## Automatic lung cancer nodule detection
 
+LUCANODE was the project I developed as part of my master thesis. Based on the [LUNA16 dataset](https://luna16.grand-challenge.org/data/), I built a deep learning system to automatically segment and detect cancerous nodules from CT scans.
+
+---
+
 ### Abstract
 Lung cancer is both the deadliest and one of the most frequently diagnosed forms of the disease. The main cause for the low survivability of lung cancer is due to its lack of early symptoms, which are only detected in terminal stages of the disease. It has been demonstrated that performing screenings in high-risk population increased the survivability by 20% but detecting lung lesions in CT imaging is time consuming and highly dependent on the skill of the radiologist.
 
@@ -46,7 +50,7 @@ For each step, there are multiple attempted approaches, which have been quantiï¬
 
 ![lucanode false positive reduction](/media/project/lucanode/fp_reduction_3.png)
 
-### Results\
+### Results
 ![lucanode results](/media/project/lucanode/results_1.png)
 
 ![lucanode results](/media/project/lucanode/results_2.png)
