@@ -7,8 +7,4 @@ draft: false
 
 ## Automatic retinal disease detection
 
-I partnered with Optretina, a 
-
-Automatic screening of diabetic retinopathy using digital fundus imaging on retina.
-
-Currently working on this. TBD.
+I partnered with Optretina, a leading opthalmology telemedicine startup in Spain to develop a new product for automated retinal disease detection based on deep learning. During my tenure there I lead the development of two new products: [Sauron and Jarvis](https://www.optretina.com/health-corporations/).
