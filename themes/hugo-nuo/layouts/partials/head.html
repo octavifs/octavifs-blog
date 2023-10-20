@@ -81,7 +81,7 @@
 {{ end }}
 
 <!-- Site Generator -->
-<meta name="generator" content="Hugo {{ .Hugo.Version }}">
+<meta name="generator" content="Hugo {{ hugo.Version }}">
 
 <!-- Permalink & RSSlink -->
 <link rel="canonical" href="{{ .Permalink }}">
@@ -150,3 +150,6 @@
 {{ if and (eq .Kind "page") (eq .Type "post") }}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/video.js@7.3.0/dist/video-js.min.css">
 {{ end }}
+
+<!-- Umami Analytics -->
+<script async src="https://analytics.eu.umami.is/script.js" data-website-id="fb8971df-f902-4aa1-a0f0-546808632629"></script>
