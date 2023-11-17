@@ -25,4 +25,4 @@ I developed Sauron as a REST API, so it would be easy to leverage by other servi
 Jarvis is an automated retinal screening application built on top of Sauron. The app takes digital fundus images taken from the retina of a patient, evaluates its quality, and then proceeds to generate an automated report with a diagnostic based on Sauron's output.
 
 ### Clinical trial results
-[![paper abstract](/media/project/sauron/paper_abstract.png)](/media/project/sauron/validation_of_autonomous_ai_for_holistic_maculopathy_screening.pdf)
+[![paper abstract](/media/project/sauron/paper_abstract.png)](https://link.springer.com/article/10.1007/s00417-022-05653-2)
